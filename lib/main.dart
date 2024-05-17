@@ -7,7 +7,7 @@ void main() {
     debugShowCheckedModeBanner: false,
     routes: {
       "/": (context) => Splash(),
-      '/signin':(context) => Signin(),
+      // '/signin':(context) => Signin(),
       // '/signup': (context) => Signup()
     },
   ));
