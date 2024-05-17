@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trackin_n_bingein/screens/splash.dart';
 import 'package:trackin_n_bingein/screens/signin.dart';
+import 'package:trackin_n_bingein/screens/signup.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -8,7 +9,7 @@ void main() {
     routes: {
       "/": (context) => Splash(),
       '/signin':(context) => Signin(),
-      // '/signup': (context) => Signup()
+      '/signup': (context) => Signup()
     },
   ));
 }
