@@ -11,46 +11,51 @@ class _SigninState extends State<Signin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Logo and Welcome Text
-              Container(
-                height: 250,
-                width: double.infinity,
-                color: Colors.lightBlue,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircleAvatar(
-                      radius: 50,
-                      backgroundColor: Colors.grey,
-                      child: Text(
-                        'LOGO',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'App Name',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
+      body: Stack(
+        children: [
+          // Background Container
+          Container(
+            height: 300,
+            width: double.infinity,
+            color: Color(0xFFB0C4DE),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundColor: Colors.grey,
+                  child: Text(
+                    'LOGO',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'App Name',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // White Container with Rounded Corners
+          Padding(
+            padding: const EdgeInsets.only(top: 200), // Adjust this value as needed
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(50),
+                  topRight: Radius.circular(50),
                 ),
               ),
-              // White Container with Rounded Corners
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 40.0),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(50)),
-                ),
+              child: SingleChildScrollView(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // Welcome Back Text
                     Text(
@@ -80,7 +85,7 @@ class _SigninState extends State<Signin> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 16),
                     // Password Field
                     TextFormField(
                       obscureText: true,
@@ -104,7 +109,7 @@ class _SigninState extends State<Signin> {
                         child: Text('Forgot password?'),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     // Sign In Button
                     SizedBox(
                       width: double.infinity,
@@ -112,7 +117,7 @@ class _SigninState extends State<Signin> {
                       child: ElevatedButton(
                         onPressed: () {},
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.lightBlue,
+                          backgroundColor: Color(0xFFB0C4DE),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -120,7 +125,7 @@ class _SigninState extends State<Signin> {
                         child: Text('Sign In'),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 10),
                     // Sign Up Option
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -132,8 +137,8 @@ class _SigninState extends State<Signin> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20),
                     // Divider with OR
+                    SizedBox(height: 10),
                     Row(
                       children: [
                         Expanded(child: Divider()),
@@ -157,7 +162,7 @@ class _SigninState extends State<Signin> {
                         label: Text('Continue with Google'),
                         onPressed: () {},
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Colors.lightBlue),
+                          side: BorderSide(color: Color(0xFFB0C4DE)),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -167,9 +172,9 @@ class _SigninState extends State<Signin> {
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
