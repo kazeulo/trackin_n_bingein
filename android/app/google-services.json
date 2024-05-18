@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "393586675136",
+    "project_id": "trackin-n-bingein-87e04",
+    "storage_bucket": "trackin-n-bingein-87e04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393586675136:android:caecf57950df91ec250c25",
+        "android_client_info": {
+          "package_name": "com.example.trackin_n_bingein"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrlF0PQyydoa6sL3TJnzmqJt4K8Vg5xX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
