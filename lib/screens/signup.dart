@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:trackin_n_bingein/screens/signup.dart';
+import 'package:trackin_n_bingein/screens/signin.dart';
 
-class Signin extends StatefulWidget {
-  const Signin({Key? key}) : super(key: key);
+class Signup extends StatefulWidget {
+  const Signup({Key? key}) : super(key: key);
 
   @override
-  State<Signin> createState() => _SigninState();
+  State<Signup> createState() => _SignupState();
 }
 
-class _SigninState extends State<Signin> {
+class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +43,7 @@ class _SigninState extends State<Signin> {
           ),
           // White Container with Rounded Corners
           Padding(
-            padding: const EdgeInsets.only(top: 200), // Adjust this value as needed
+            padding: const EdgeInsets.only(top: 200), 
             child: Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
@@ -58,9 +58,9 @@ class _SigninState extends State<Signin> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Welcome Back Text
+                    // Welcome Text
                     Text(
-                      'Welcome back!',
+                      'Get on Board!',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 24,
@@ -69,7 +69,7 @@ class _SigninState extends State<Signin> {
                     ),
                     SizedBox(height: 8),
                     Text(
-                      'Make it work, make it right, make it fast.',
+                      'Create your profile to start your journey.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 14,
@@ -81,6 +81,16 @@ class _SigninState extends State<Signin> {
                     TextFormField(
                       decoration: InputDecoration(
                         labelText: 'Username',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    // Email Field
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Email',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -102,16 +112,7 @@ class _SigninState extends State<Signin> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    // Forgot Password Button
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text('Forgot password?'),
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    // Sign In Button
+                    // Sign Up Button
                     SizedBox(
                       width: double.infinity,
                       height: 50,
@@ -123,7 +124,7 @@ class _SigninState extends State<Signin> {
                             borderRadius: BorderRadius.circular(12),
                           ),
                         ),
-                        child: Text('Sign In'),
+                        child: Text('Sign Up'),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -131,15 +132,15 @@ class _SigninState extends State<Signin> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account?"),
+                        Text("Already have an account?"),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => Signup()),
+                            MaterialPageRoute(builder: (context) => Signin()),
                             );
                           },
-                          child: Text('Sign Up'),
+                          child: Text('Sign In'),
                         ),
                       ],
                     ),
@@ -162,7 +163,7 @@ class _SigninState extends State<Signin> {
                       height: 50,
                       child: OutlinedButton.icon(
                         icon: Image.asset(
-                          'lib/assets/google.png',
+                          'assets/google.png',
                           height: 24,
                         ),
                         label: Text('Continue with Google'),
