@@ -162,7 +162,7 @@ class _SigninState extends State<Signin> {
                       height: 50,
                       child: OutlinedButton.icon(
                         icon: Image.asset(
-                          'assets/google.png',
+                          'lib/assets/google.png',
                           height: 24,
                         ),
                         label: Text('Continue with Google'),
