@@ -69,7 +69,7 @@ class _SignupState extends State<Signup> {
                     children: [
                       // Welcome Back Text
                       Text(
-                        'Get on board',
+                        'Get on board!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 24,
