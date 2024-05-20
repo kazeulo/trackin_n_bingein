@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/screens/signup.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -132,7 +133,12 @@ class _SigninState extends State<Signin> {
                       children: [
                         Text("Don't have an account?"),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Signup()),
+                            );
+                          },
                           child: Text('Sign Up'),
                         ),
                       ],
