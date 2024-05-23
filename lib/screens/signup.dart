@@ -14,7 +14,8 @@ class _SignupState extends State<Signup> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,51 +24,42 @@ class _SignupState extends State<Signup> {
         children: [
           // Background Container
           Container(
-            height: 300,
+            height: 200,
             width: double.infinity,
             color: Color(0xFFB0C4DE),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.grey,
-                  child: Text(
-                    'LOGO',
-                    style: TextStyle(color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10), 
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'lib/assets/logofin.png', 
+                    height: 150,
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'App Name',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                  Text(
+                    'App Name',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          // White Container with Rounded Corners
+          // White Container
           Padding(
             padding: const EdgeInsets.only(top: 200),
             child: Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50),
-                  topRight: Radius.circular(50),
-                ),
-              ),
+              color: Colors.white,
               child: SingleChildScrollView(
                 child: Form(
                   key: _formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Welcome Back Text
                       Text(
                         'Get on board!',
                         textAlign: TextAlign.center,
@@ -175,7 +167,7 @@ class _SignupState extends State<Signup> {
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {
-                               Navigator.push(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) => Homepage()),
                               );
