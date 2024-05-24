@@ -10,6 +10,8 @@ void main() {
       "/": (context) => Splash(),
       // '/signin': (context) => Signin(),
       '/signup': (context) => Signup(),
+      // '/homepage':(context) => Homepage(),
+      // '/media': (context) => Media(),
     },
   ));
 }
