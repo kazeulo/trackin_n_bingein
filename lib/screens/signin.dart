@@ -16,29 +16,27 @@ class _SigninState extends State<Signin> {
         children: [
           // Background Container
           Container(
-            height: 300,
+            height: 200,
             width: double.infinity,
             color: Color(0xFFB0C4DE),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Colors.grey,
-                  child: Text(
-                    'LOGO',
-                    style: TextStyle(color: Colors.white),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10), 
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    'lib/assets/logofin.png', 
+                    height: 150,
                   ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'App Name',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                  Text(
+                    'App Name',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
           // White Container with Rounded Corners
