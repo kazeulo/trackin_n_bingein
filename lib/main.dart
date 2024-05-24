@@ -12,6 +12,7 @@ void main() {
       '/signin': (context) => Signin(),
       '/signup': (context) => Signup(),
       '/homepage': (context) => Homepage(), 
+      // '/media': (context) => Media(),
     },
   ));
 }
