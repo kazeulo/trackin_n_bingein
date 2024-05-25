@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:trackin_n_bingein/authentication/user_auth.dart';
+import 'package:trackin_n_bingein/global/common/toast.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
 import 'package:trackin_n_bingein/screens/signin.dart';
 
@@ -199,11 +200,11 @@ class _SignupState extends State<Signup> {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: isSigning ? null : () {
+                          onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {
                               _signUp();
                             }
-                          }, // Disable button when signing up
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFB0C4DE),
                             shape: RoundedRectangleBorder(
@@ -211,7 +212,7 @@ class _SignupState extends State<Signup> {
                             ),
                           ),
                           child: isSigning
-                              ? CircularProgressIndicator() // Show loading indicator
+                              ? CircularProgressIndicator(color: Colors.white)
                               : Text('Sign Up'),
                         ),
                       ),
@@ -276,34 +277,27 @@ class _SignupState extends State<Signup> {
   }
 
   void _signUp() async{
-
     setState(() {
-      isSigning = true; // Set isSigning to true to show the loading indicator
+      isSigning = true;
     });
 
     String username = _usernameController.text;
     String email = _emailController.text;
     String password = _confirmPasswordController.text;
 
-    try {
-      User? user = await _auth.createUserwithEmailandPassword(email, password);
+    User? user = await _auth.createUserwithEmailandPassword(email, password);
 
-      if (user != null) {
-        print('User successfully created');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Homepage()),
-        );
-      } else {
-        print('Error: User is null');
-      }
-    } catch (e) {
-      print('Error: $e');
-    } finally {
-      setState(() {
-        isSigning = false; // Set isSigning back to false to hide the loading indicator
-      });
+    setState(() {
+      isSigning = false;
+    });
+
+    if (user != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Homepage()),
+      );
+    } else {
+      showToast(message: 'Email already exists.');
     }
   }
 }
-

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:trackin_n_bingein/authentication/user_auth.dart';
+import 'package:trackin_n_bingein/global/common/toast.dart';
 import 'package:trackin_n_bingein/screens/signup.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
 import '../authentication/user_auth.dart';
@@ -17,6 +18,7 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
 
   final FirebaseAuthentication _auth = FirebaseAuthentication();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   bool isSigning = false;
 
@@ -140,7 +142,10 @@ class _SigninState extends State<Signin> {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: isSigning ? null : _signIn, 
+                        onPressed: () {
+                          _signIn();
+                          },
+                        //onPressed: _signIn, 
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFFB0C4DE),
                           shape: RoundedRectangleBorder(
@@ -148,7 +153,7 @@ class _SigninState extends State<Signin> {
                         ),
                       ),
                       child: isSigning
-                          ? CircularProgressIndicator() // loading indicator
+                          ? CircularProgressIndicator(color: Colors.white) // loading indicator
                           : Text('Sign In'),
                       ),
                     ),
@@ -220,24 +225,20 @@ class _SigninState extends State<Signin> {
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    try {
-      User? user = await _auth.signInwithEmailandPassword(email, password);
+    User? user = await _auth.signInwithEmailandPassword(email, password);
 
-      if (user != null) {
-        print('User successfully signed in');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Homepage()),
-        );
-      } else {
-        print('Error: User is null');
-      }
-    } catch (e) {
-      print('Error: $e');
-    } finally {
-      setState(() {
-        isSigning = false; // Set isSigning back to false to hide the loading indicator
-      });
+    setState(() {
+      isSigning = false;
+    });
+      
+    if (user != null) {
+      showToast(message: 'Signed in successfully.');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Homepage()),
+      );
+    } else {
+      showToast(message: 'Incorrect email or password.');
     }
   }
 }
