@@ -17,6 +17,8 @@ class _SignupState extends State<Signup> {
 
   final FirebaseAuthentication _auth = FirebaseAuthentication();
 
+  bool isSigning = false;
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -197,21 +199,20 @@ class _SignupState extends State<Signup> {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: isSigning ? null : () {
                             if (_formKey.currentState?.validate() ?? false) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => Homepage()),
-                              );
+                              _signUp();
                             }
-                          },
+                          }, // Disable button when signing up
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFFB0C4DE),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text('Sign Up'),
+                          child: isSigning
+                              ? CircularProgressIndicator() // Show loading indicator
+                              : Text('Sign Up'),
                         ),
                       ),
                       SizedBox(height: 10),
@@ -275,23 +276,34 @@ class _SignupState extends State<Signup> {
   }
 
   void _signUp() async{
+
+    setState(() {
+      isSigning = true; // Set isSigning to true to show the loading indicator
+    });
+
     String username = _usernameController.text;
     String email = _emailController.text;
     String password = _confirmPasswordController.text;
 
-    Future<User?> user = _auth.createUserwithEmailandPassword(
-      email, 
-      password);
+    try {
+      User? user = await _auth.createUserwithEmailandPassword(email, password);
 
-      if (user != null){
-        print('User succesfully created');
+      if (user != null) {
+        print('User successfully created');
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Homepage()),
         );
-      }else{
-        print('Error');
+      } else {
+        print('Error: User is null');
       }
+    } catch (e) {
+      print('Error: $e');
+    } finally {
+      setState(() {
+        isSigning = false; // Set isSigning back to false to hide the loading indicator
+      });
+    }
   }
 }
 

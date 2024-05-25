@@ -18,7 +18,8 @@ class _SigninState extends State<Signin> {
 
   final FirebaseAuthentication _auth = FirebaseAuthentication();
 
-  TextEditingController  _usernameController = TextEditingController();
+  bool isSigning = false;
+
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -92,9 +93,9 @@ class _SigninState extends State<Signin> {
                     SizedBox(height: 20),
                     // Username Field
                     TextFormField(
-                      controller: _usernameController,
+                      controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: 'Username',
+                        labelText: 'Email',
                         prefixIcon: Icon(Icons.person),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -139,14 +140,16 @@ class _SigninState extends State<Signin> {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: isSigning ? null : _signIn, 
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFFB0C4DE),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Text('Sign In'),
+                      ),
+                      child: isSigning
+                          ? CircularProgressIndicator() // loading indicator
+                          : Text('Sign In'),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -208,22 +211,33 @@ class _SigninState extends State<Signin> {
     );
   }
 
-  void _signUp() async{
+  void _signIn() async{
+
+    setState(() {
+      isSigning = true;
+    });
+
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    Future<User?> user = _auth.signInwithEmailandPassword(
-      email, 
-      password);
+    try {
+      User? user = await _auth.signInwithEmailandPassword(email, password);
 
-      if (user != null){
-        print('User succesfully signedIn');
+      if (user != null) {
+        print('User successfully signed in');
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => Homepage()),
         );
-      }else{
-        print('Error');
+      } else {
+        print('Error: User is null');
       }
+    } catch (e) {
+      print('Error: $e');
+    } finally {
+      setState(() {
+        isSigning = false; // Set isSigning back to false to hide the loading indicator
+      });
+    }
   }
 }
