@@ -1,5 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:trackin_n_bingein/authentication/user_auth.dart';
 import 'package:trackin_n_bingein/screens/signup.dart';
+import 'package:trackin_n_bingein/screens/homepage.dart';
+import '../authentication/user_auth.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -9,8 +15,12 @@ class Signin extends StatefulWidget {
 }
 
 class _SigninState extends State<Signin> {
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+
+  final FirebaseAuthentication _auth = FirebaseAuthentication();
+
+  TextEditingController  _usernameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
   bool _isPasswordVisible = false;
 
@@ -25,12 +35,12 @@ class _SigninState extends State<Signin> {
             width: double.infinity,
             color: Color(0xFFB0C4DE),
             child: Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10), 
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'lib/assets/logofin.png',
+                    'lib/assets/logofin.png', 
                     height: 150,
                   ),
                   Text(
@@ -196,5 +206,24 @@ class _SigninState extends State<Signin> {
         ],
       ),
     );
+  }
+
+  void _signUp() async{
+    String email = _emailController.text;
+    String password = _passwordController.text;
+
+    Future<User?> user = _auth.signInwithEmailandPassword(
+      email, 
+      password);
+
+      if (user != null){
+        print('User succesfully signedIn');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Homepage()),
+        );
+      }else{
+        print('Error');
+      }
   }
 }
