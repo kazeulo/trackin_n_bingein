@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:trackin_n_bingein/authentication/user_auth.dart';
@@ -197,7 +198,9 @@ class _SigninState extends State<Signin> {
                           height: 24,
                         ),
                         label: Text('Continue with Google'),
-                        onPressed: () {},
+                        onPressed: () {
+                          _signInWithGoogle();
+                        },
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(color: Color(0xFFB0C4DE)),
                           shape: RoundedRectangleBorder(
@@ -239,6 +242,33 @@ class _SigninState extends State<Signin> {
       );
     } else {
       showToast(message: 'Incorrect email or password.');
+    }
+  }
+
+  _signInWithGoogle() async{
+
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+    try{
+
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+
+      if(googleSignInAccount != null){
+        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken,
+        );
+
+        await _firebaseAuth.signInWithCredential(credential);
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Homepage()),
+        );
+      } 
+    } catch (e) {
+      showToast(message: 'Sign in with google failed.');
     }
   }
 }
