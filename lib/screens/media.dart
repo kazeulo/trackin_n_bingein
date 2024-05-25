@@ -27,16 +27,9 @@ class MediaState extends State<Media> {
                 
                 // placeholder photo on the right side 
               ),  
-                )];
-                // text should be after the circle avatar on the top screen
-                // child: const Text(
-                //   'Kzlyr, Track your media use',
-                //   style: TextStyle(color: Colors.white),
-                // ),
-          
+            ]
+          )
         ),
-        );
-
-        
+    );
   }
 }
