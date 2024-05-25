@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:trackin_n_bingein/authentication/user_auth.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
 import 'package:trackin_n_bingein/screens/signin.dart';
 
@@ -11,6 +14,9 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
+
+  final FirebaseAuthentication _auth = FirebaseAuthentication();
+
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -30,12 +36,12 @@ class _SignupState extends State<Signup> {
             width: double.infinity,
             color: Color(0xFFB0C4DE),
             child: Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10), 
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(
-                    'lib/assets/logofin.png',
+                    'lib/assets/logofin.png', 
                     height: 150,
                   ),
                   Text(
@@ -117,6 +123,7 @@ class _SignupState extends State<Signup> {
                           if (!regex.hasMatch(value)) {
                             return 'Please enter a valid email';
                           }
+                          // Add email existence check logic here
                           return null;
                         },
                       ),
@@ -266,4 +273,25 @@ class _SignupState extends State<Signup> {
       ),
     );
   }
+
+  void _signUp() async{
+    String username = _usernameController.text;
+    String email = _emailController.text;
+    String password = _confirmPasswordController.text;
+
+    Future<User?> user = _auth.createUserwithEmailandPassword(
+      email, 
+      password);
+
+      if (user != null){
+        print('User succesfully created');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Homepage()),
+        );
+      }else{
+        print('Error');
+      }
+  }
 }
+

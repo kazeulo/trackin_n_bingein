@@ -21,24 +21,15 @@ class MediaState extends State<Media> {
               CircleAvatar(
                 radius: 40,
                 backgroundColor: Colors.grey,
-                child: const Text(
-                  'Kzlyr, Track your media use',
-                  style: TextStyle(color: Colors.white),
-                ),
+                child: Image.asset(
+                "lib/assets/placeholder_profile.jpg",
+              ),
+                
                 // placeholder photo on the right side 
-            Positioned(
-            left: 0,
-            bottom: 0,
-            child: Image.asset(
-              "lib/assets/splash.png",
-            ),
-          ),
               ),  
-                ),
-          
+            ]
+          )
         ),
-        );
-
-        
+    );
   }
 }
