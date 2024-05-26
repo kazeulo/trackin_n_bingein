@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:trackin_n_bingein/global/common/toast.dart';
 
 class FirebaseAuthentication {
 
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<User?> createUserwithEmailandPassword(
     String email,
@@ -13,8 +14,12 @@ class FirebaseAuthentication {
         email: email, 
         password: password);
         return credential.user;
-    } catch(e){
-      print("Some error occurred.");
+    } on FirebaseAuthException catch(e){
+      if (e.code == 'email-already-in-use'){
+        showToast(message: 'The email is already in use.');
+      } else {
+        // showToast(message: 'An error occurred: ${e.code}');
+      }
     }
     return null;
   }
@@ -28,8 +33,12 @@ class FirebaseAuthentication {
         email: email, 
         password: password);
         return credential.user;
-    } catch(e){
-      print("Some error occurred.");
+    } on FirebaseException catch(e){
+      if (e.code == 'user-not-found' || e.code == 'wrong-password'){
+        showToast(message: 'Invalid email or password.');
+      } else {
+        // showToast(message: 'An error occured: ${e.code}');
+      }
     }
     return null;
   }

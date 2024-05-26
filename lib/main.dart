@@ -5,7 +5,7 @@ import 'package:trackin_n_bingein/screens/signin.dart';
 import 'package:trackin_n_bingein/screens/signup.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
 
-void main() async {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
