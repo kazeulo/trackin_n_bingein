@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
+import 'package:trackin_n_bingein/screens/media.dart';
 
 class Homepage extends StatefulWidget {
   const Homepage({Key? key}) : super(key: key);
@@ -13,8 +14,8 @@ class _HomepageState extends State<Homepage> {
 
   final List<Widget> _tabs = [
     HomeTab(),
-    StatisticsTab(),
     ListTab(),
+    StatisticsTab(),
     ProfileTab(),
   ];
 
@@ -73,13 +74,15 @@ class _HomepageState extends State<Homepage> {
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.analytics, color: _currentIndex == 1 ? Styling.textColor3 : Colors.black),
+            icon: Icon(Icons.list,
+                color: _currentIndex == 2 ? Styling.textColor3 : Colors.black),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list, color: _currentIndex == 2 ? Styling.textColor3 : Colors.black),
+            icon: Icon(Icons.analytics, color: _currentIndex == 1 ? Styling.textColor3 : Colors.black),
             label: '',
           ),
+          
           BottomNavigationBarItem(
             icon: Icon(Icons.person, color: _currentIndex == 3 ? Styling.textColor3 : Colors.black),
             label: '',
@@ -244,24 +247,20 @@ class ListingItem extends StatelessWidget {
   }
 }
 
+class ListTab extends StatelessWidget { // call media.dart here
+  @override
+  Widget build(BuildContext context) {
+    return Media();
+    
+  }
+}
+
 class StatisticsTab extends StatelessWidget { // call statistics.dart here
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Text(
         'Statistics',
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-}
-
-class ListTab extends StatelessWidget { // call media.dart here
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'List',
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
       ),
     );
