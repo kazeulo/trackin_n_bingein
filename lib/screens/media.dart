@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trackin_n_bingein/buttons/buttons.dart';
-import 'package:trackin_n_bingein/styling/styling.dart';
 
 class Media extends StatefulWidget {
   const Media({Key? key}) : super(key: key);
@@ -13,23 +11,36 @@ class MediaState extends State<Media> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:SingleChildScrollView(
-        child: Row(
-          // circular placeholder for photo 
-        mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(
+        title: Text("Media"),
+        backgroundColor: Colors.blueGrey,
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CircleAvatar(
                 radius: 40,
                 backgroundColor: Colors.grey,
-                child: Image.asset(
-                "lib/assets/placeholder_profile.jpg",
+                child: ClipOval(
+                  child: Image.asset(
+                    "lib/assets/placeholder_profile.jpg",
+                    fit: BoxFit.cover,
+                    width: 80,
+                    height: 80,
+                  ),
+                ),
               ),
-                
-                // placeholder photo on the right side 
-              ),  
-            ]
-          )
+              SizedBox(height: 20),
+              Text(
+                "Kzlyr, track your media listings",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
+      ),
     );
   }
 }
