@@ -3,7 +3,7 @@ import 'package:trackin_n_bingein/styling/styling.dart';
 import 'package:trackin_n_bingein/screens/media.dart';
 
 class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
+  const Homepage({super.key});
 
   @override
   _HomepageState createState() => _HomepageState();
@@ -13,10 +13,10 @@ class _HomepageState extends State<Homepage> {
   int _currentIndex = 0;
 
   final List<Widget> _tabs = [
-    HomeTab(),
-    ListTab(),
-    StatisticsTab(),
-    ProfileTab(),
+    const HomeTab(),
+    const ListTab(),
+    const StatisticsTab(),
+    const ProfileTab(),
   ];
 
   @override
@@ -29,7 +29,7 @@ class _HomepageState extends State<Homepage> {
             child: Column(
               children: [
                 Container(
-                  color: Color(0xFFA7BCC7),
+                  color: const Color(0xFFA7BCC7),
                   child: AppBar(
                     automaticallyImplyLeading: false,
                     backgroundColor: Colors.transparent,
@@ -46,7 +46,7 @@ class _HomepageState extends State<Homepage> {
                           },
                           child: CircleAvatar(   // User profile
                             backgroundColor: Colors.grey[300],
-                            child: Icon(Icons.person, size: 30, color: Colors.white),
+                            child: const Icon(Icons.person, size: 30, color: Colors.white),
                           ),
                         ),
                       ],
@@ -54,7 +54,7 @@ class _HomepageState extends State<Homepage> {
                   ),
                 ),
                 if (_currentIndex == 0) ...[
-                  GreetingSection(),
+                  const GreetingSection(),
                 ],
               ],
             ),
@@ -94,11 +94,13 @@ class _HomepageState extends State<Homepage> {
 }
 
 class HomeTab extends StatelessWidget {
+  const HomeTab({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.only(top: 180.0, left: 16.0, right: 16.0),
+        padding: EdgeInsets.only(top: 180.0, left: 16.0, right: 16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -114,20 +116,22 @@ class HomeTab extends StatelessWidget {
 }
 
 class GreetingSection extends StatelessWidget {
+  const GreetingSection({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16.0),
       height: 100,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xFFA7BCC7),
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(25),
           bottomRight: Radius.circular(25),
         ),
       ),
-      child: Row(
+      child: const Row(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -148,7 +152,9 @@ class GreetingSection extends StatelessWidget {
   }
 }
 
-class WeeklyWrapUpSection extends StatelessWidget {  // not finished
+class WeeklyWrapUpSection extends StatelessWidget {
+  const WeeklyWrapUpSection({super.key});
+  // not finished
   @override 
   Widget build(BuildContext context) {
     return Card(
@@ -158,21 +164,21 @@ class WeeklyWrapUpSection extends StatelessWidget {  // not finished
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(
+            const Text(
               'Weekly Wrap-up',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
-            Text('Some informative text.'),
+            const SizedBox(height: 10),
+            const Text('Some informative text.'),
             CircularProgressIndicator(
               value: 0.0,
               strokeWidth: 10,
               backgroundColor: Colors.grey[200],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {},
-              child: Text('View my statistics'),
+              child: const Text('View my statistics'),
             ),
           ],
         ),
@@ -181,10 +187,12 @@ class WeeklyWrapUpSection extends StatelessWidget {  // not finished
   }
 }
 
-class MyListingsSection extends StatelessWidget { // not finished
+class MyListingsSection extends StatelessWidget {
+  const MyListingsSection({super.key});
+ // not finished
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -221,7 +229,7 @@ class ListingItem extends StatelessWidget {
   final IconData icon;
   final String label;
 
-  ListingItem({required this.icon, required this.label});
+  const ListingItem({super.key, required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -247,18 +255,22 @@ class ListingItem extends StatelessWidget {
   }
 }
 
-class ListTab extends StatelessWidget { // call media.dart here
+class ListTab extends StatelessWidget {
+  const ListTab({super.key});
+ // call media.dart here
   @override
   Widget build(BuildContext context) {
-    return Media();
+    return const Media();
     
   }
 }
 
-class StatisticsTab extends StatelessWidget { // call statistics.dart here
+class StatisticsTab extends StatelessWidget {
+  const StatisticsTab({super.key});
+ // call statistics.dart here
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         'Statistics',
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -267,10 +279,12 @@ class StatisticsTab extends StatelessWidget { // call statistics.dart here
   }
 }
 
-class ProfileTab extends StatelessWidget { // call profile.dart here
+class ProfileTab extends StatelessWidget {
+  const ProfileTab({super.key});
+ // call profile.dart here
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text(
         'Profile',
         style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),

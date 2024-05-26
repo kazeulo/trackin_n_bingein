@@ -12,10 +12,10 @@ Future main() async {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     routes: {
-      "/": (context) => Splash(),
-      '/signin': (context) => Signin(),
-      '/signup': (context) => Signup(),
-      '/homepage': (context) => Homepage(), 
+      "/": (context) => const Splash(),
+      '/signin': (context) => const Signin(),
+      '/signup': (context) => const Signup(),
+      '/homepage': (context) => const Homepage(), 
       // '/media': (context) => Media(),
     },
   ));

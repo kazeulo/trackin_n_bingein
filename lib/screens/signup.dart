@@ -7,7 +7,7 @@ import 'package:trackin_n_bingein/screens/homepage.dart';
 import 'package:trackin_n_bingein/screens/signin.dart';
 
 class Signup extends StatefulWidget {
-  const Signup({Key? key}) : super(key: key);
+  const Signup({super.key});
 
   @override
   State<Signup> createState() => _SignupState();
@@ -37,7 +37,7 @@ class _SignupState extends State<Signup> {
           Container(
             height: 250,
             width: double.infinity,
-            color: Color(0xFFB0C4DE),
+            color: const Color(0xFFB0C4DE),
             child: Padding(
               padding: const EdgeInsets.only(top: 10), 
               child: Column(
@@ -47,7 +47,7 @@ class _SignupState extends State<Signup> {
                     'lib/assets/logofin.png', 
                     height: 150,
                   ),
-                  Text(
+                  const Text(
                     'App Name',
                     style: TextStyle(
                       fontSize: 24,
@@ -63,7 +63,7 @@ class _SignupState extends State<Signup> {
             padding: const EdgeInsets.only(top: 250),
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
               color: Colors.white,
               child: SingleChildScrollView(
                 child: Form(
@@ -71,7 +71,7 @@ class _SignupState extends State<Signup> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      const Text(
                         'Get on board!',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -79,8 +79,8 @@ class _SignupState extends State<Signup> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 8),
-                      Text(
+                      const SizedBox(height: 8),
+                      const Text(
                         'Create your profile to start your journey.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -88,13 +88,13 @@ class _SignupState extends State<Signup> {
                           color: Colors.grey,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       // Username Field
                       TextFormField(
                         controller: _usernameController,
                         decoration: InputDecoration(
                           labelText: 'Username',
-                          prefixIcon: Icon(Icons.person),
+                          prefixIcon: const Icon(Icons.person),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -106,13 +106,13 @@ class _SignupState extends State<Signup> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       // Email Field
                       TextFormField(
                         controller: _emailController,
                         decoration: InputDecoration(
                           labelText: 'Email',
-                          prefixIcon: Icon(Icons.email),
+                          prefixIcon: const Icon(Icons.email),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -130,14 +130,14 @@ class _SignupState extends State<Signup> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       // Password Field
                       TextFormField(
                         controller: _passwordController,
                         obscureText: !_isPasswordVisible,
                         decoration: InputDecoration(
                           labelText: 'Password',
-                          prefixIcon: Icon(Icons.lock),
+                          prefixIcon: const Icon(Icons.lock),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -162,14 +162,14 @@ class _SignupState extends State<Signup> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       // Confirm Password Field
                       TextFormField(
                         controller: _confirmPasswordController,
                         obscureText: !_isConfirmPasswordVisible,
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',
-                          prefixIcon: Icon(Icons.lock_outline),
+                          prefixIcon: const Icon(Icons.lock_outline),
                           suffixIcon: IconButton(
                             icon: Icon(
                               _isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -194,7 +194,7 @@ class _SignupState extends State<Signup> {
                           return null;
                         },
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       // Sign In Button
                       SizedBox(
                         width: double.infinity,
@@ -206,46 +206,46 @@ class _SignupState extends State<Signup> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFFB0C4DE),
+                            backgroundColor: const Color(0xFFB0C4DE),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
                           child: isSigning
-                              ? CircularProgressIndicator(color: Colors.white)
-                              : Text('Sign Up'),
+                              ? const CircularProgressIndicator(color: Colors.white)
+                              : const Text('Sign Up'),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       // Sign Up Option
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text("Already have an account?"),
+                          const Text("Already have an account?"),
                           TextButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => Signin()),
+                                MaterialPageRoute(builder: (context) => const Signin()),
                               );
                             },
-                            child: Text('Sign In'),
+                            child: const Text('Sign In'),
                           ),
                         ],
                       ),
                       // Divider with OR
-                      SizedBox(height: 10),
-                      Row(
+                      const SizedBox(height: 10),
+                      const Row(
                         children: [
                           Expanded(child: Divider()),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
                             child: Text('OR'),
                           ),
                           Expanded(child: Divider()),
                         ],
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       // Continue with Google Button
                       SizedBox(
                         width: double.infinity,
@@ -255,10 +255,10 @@ class _SignupState extends State<Signup> {
                             'lib/assets/google.png',
                             height: 24,
                           ),
-                          label: Text('Continue with Google'),
+                          label: const Text('Continue with Google'),
                           onPressed: () {},
                           style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: Color(0xFFB0C4DE)),
+                            side: const BorderSide(color: Color(0xFFB0C4DE)),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
@@ -294,7 +294,7 @@ class _SignupState extends State<Signup> {
     if (user != null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Homepage()),
+        MaterialPageRoute(builder: (context) => const Homepage()),
       );
     } else {
       showToast(message: 'Email already exists.');

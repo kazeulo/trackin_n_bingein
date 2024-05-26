@@ -8,6 +8,8 @@ class FlutterApp extends StatelessWidget {
   final ValueNotifier<bool> _dark = ValueNotifier<bool>(true);
   final ValueNotifier<double> _widthFactor = ValueNotifier<double>(1.0);
 
+  FlutterApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<bool>(
@@ -32,7 +34,7 @@ class FlutterApp extends StatelessWidget {
                       onChanged: (value) {
                         if (value != null) _widthFactor.value = value;
                       },
-                      items: [
+                      items: const [
                         DropdownMenuItem(value: 0.5, child: Text('Size: 50%')),
                         DropdownMenuItem(value: 0.75, child: Text('Size: 75%')),
                         DropdownMenuItem(value: 1.0, child: Text('Size: 100%')),
@@ -46,9 +48,9 @@ class FlutterApp extends StatelessWidget {
               child: ValueListenableBuilder<double>(
                 valueListenable: _widthFactor,
                 builder: (context, widthFactor, _) {
-                  return Container(
+                  return SizedBox(
                     width: MediaQuery.of(context).size.width * widthFactor,
-                    child: ProfileScreen(),
+                    child: const ProfileScreen(),
                   );
                 },
               ),
@@ -61,6 +63,8 @@ class FlutterApp extends StatelessWidget {
 }
 
 class ProfileScreen extends StatelessWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -72,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
             width: 300,
             height: 600,
             color: Colors.white,
-            child: Stack(
+            child: const Stack(
               children: [
                 Positioned(
                   left: 20,
@@ -133,7 +137,7 @@ class ProfileScreen extends StatelessWidget {
 class ProfileOption extends StatelessWidget {
   final String text;
 
-  ProfileOption({required this.text});
+  const ProfileOption({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -144,9 +148,9 @@ class ProfileOption extends StatelessWidget {
         children: [
           Text(
             text,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
-          Icon(Icons.arrow_forward_ios, size: 18),
+          const Icon(Icons.arrow_forward_ios, size: 18),
         ],
       ),
     );

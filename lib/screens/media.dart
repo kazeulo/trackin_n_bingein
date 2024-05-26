@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Media extends StatefulWidget {
-  const Media({Key? key}) : super(key: key);
+  const Media({super.key});
 
   @override
   MediaState createState() => MediaState();
@@ -12,7 +12,7 @@ class MediaState extends State<Media> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Media"),
+        title: const Text("Media"),
         backgroundColor: Colors.blueGrey,
       ),
       body: SingleChildScrollView(
@@ -32,8 +32,8 @@ class MediaState extends State<Media> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 "Kzlyr, track your media listings",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),

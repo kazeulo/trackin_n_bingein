@@ -7,10 +7,9 @@ import 'package:trackin_n_bingein/authentication/user_auth.dart';
 import 'package:trackin_n_bingein/global/common/toast.dart';
 import 'package:trackin_n_bingein/screens/signup.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
-import '../authentication/user_auth.dart';
 
 class Signin extends StatefulWidget {
-  const Signin({Key? key}) : super(key: key);
+  const Signin({super.key});
 
   @override
   State<Signin> createState() => _SigninState();
@@ -37,7 +36,7 @@ class _SigninState extends State<Signin> {
           Container(
             height: 200,
             width: double.infinity,
-            color: Color(0xFFB0C4DE),
+            color: const Color(0xFFB0C4DE),
             child: Padding(
               padding: const EdgeInsets.only(top: 10), 
               child: Column(
@@ -47,7 +46,7 @@ class _SigninState extends State<Signin> {
                     'lib/assets/logofin.png', 
                     height: 150,
                   ),
-                  Text(
+                  const Text(
                     'App Name',
                     style: TextStyle(
                       fontSize: 24,
@@ -63,8 +62,8 @@ class _SigninState extends State<Signin> {
             padding: const EdgeInsets.only(top: 200),
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(50),
@@ -76,7 +75,7 @@ class _SigninState extends State<Signin> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // Welcome Back Text
-                    Text(
+                    const Text(
                       'Welcome back!',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -84,8 +83,8 @@ class _SigninState extends State<Signin> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 8),
-                    Text(
+                    const SizedBox(height: 8),
+                    const Text(
                       'Make it work, make it right, make it fast.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -93,26 +92,26 @@ class _SigninState extends State<Signin> {
                         color: Colors.grey,
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     // Username Field
                     TextFormField(
                       controller: _emailController,
                       decoration: InputDecoration(
                         labelText: 'Email',
-                        prefixIcon: Icon(Icons.person),
+                        prefixIcon: const Icon(Icons.person),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     // Password Field
                     TextFormField(
                       controller: _passwordController,
                       obscureText: !_isPasswordVisible,
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock),
+                        prefixIcon: const Icon(Icons.lock),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
@@ -128,16 +127,16 @@ class _SigninState extends State<Signin> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     // Forgot Password Button
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
                         onPressed: () {},
-                        child: Text('Forgot password?'),
+                        child: const Text('Forgot password?'),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     // Sign In Button
                     SizedBox(
                       width: double.infinity,
@@ -148,46 +147,46 @@ class _SigninState extends State<Signin> {
                           },
                         //onPressed: _signIn, 
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFB0C4DE),
+                          backgroundColor: const Color(0xFFB0C4DE),
                           shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       child: isSigning
-                          ? CircularProgressIndicator(color: Colors.white) // loading indicator
-                          : Text('Sign In'),
+                          ? const CircularProgressIndicator(color: Colors.white) // loading indicator
+                          : const Text('Sign In'),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     // Sign Up Option
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an account?"),
+                        const Text("Don't have an account?"),
                         TextButton(
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Signup()),
+                              MaterialPageRoute(builder: (context) => const Signup()),
                             );
                           },
-                          child: Text('Sign Up'),
+                          child: const Text('Sign Up'),
                         ),
                       ],
                     ),
                     // Divider with OR
-                    SizedBox(height: 10),
-                    Row(
+                    const SizedBox(height: 10),
+                    const Row(
                       children: [
                         Expanded(child: Divider()),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text('OR'),
                         ),
                         Expanded(child: Divider()),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     // Continue with Google Button
                     SizedBox(
                       width: double.infinity,
@@ -197,12 +196,12 @@ class _SigninState extends State<Signin> {
                           'lib/assets/google.png',
                           height: 24,
                         ),
-                        label: Text('Continue with Google'),
+                        label: const Text('Continue with Google'),
                         onPressed: () {
                           _signInWithGoogle();
                         },
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: Color(0xFFB0C4DE)),
+                          side: const BorderSide(color: Color(0xFFB0C4DE)),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -238,7 +237,7 @@ class _SigninState extends State<Signin> {
       showToast(message: 'Signed in successfully.');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Homepage()),
+        MaterialPageRoute(builder: (context) => const Homepage()),
       );
     } else {
       showToast(message: 'Incorrect email or password.');
@@ -264,7 +263,7 @@ class _SigninState extends State<Signin> {
         await _firebaseAuth.signInWithCredential(credential);
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Homepage()),
+          MaterialPageRoute(builder: (context) => const Homepage()),
         );
       } 
     } catch (e) {
