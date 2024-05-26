@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:trackin_n_bingein/authentication/user_auth.dart';
+import 'package:trackin_n_bingein/global/common/toast.dart';
 import 'package:trackin_n_bingein/screens/signup.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
 import '../authentication/user_auth.dart';
@@ -17,8 +19,10 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
 
   final FirebaseAuthentication _auth = FirebaseAuthentication();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  TextEditingController  _usernameController = TextEditingController();
+  bool isSigning = false;
+
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
@@ -92,9 +96,9 @@ class _SigninState extends State<Signin> {
                     SizedBox(height: 20),
                     // Username Field
                     TextFormField(
-                      controller: _usernameController,
+                      controller: _emailController,
                       decoration: InputDecoration(
-                        labelText: 'Username',
+                        labelText: 'Email',
                         prefixIcon: Icon(Icons.person),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -139,14 +143,19 @@ class _SigninState extends State<Signin> {
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          _signIn();
+                          },
+                        //onPressed: _signIn, 
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xFFB0C4DE),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Text('Sign In'),
+                      ),
+                      child: isSigning
+                          ? CircularProgressIndicator(color: Colors.white) // loading indicator
+                          : Text('Sign In'),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -189,7 +198,9 @@ class _SigninState extends State<Signin> {
                           height: 24,
                         ),
                         label: Text('Continue with Google'),
-                        onPressed: () {},
+                        onPressed: () {
+                          _signInWithGoogle();
+                        },
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(color: Color(0xFFB0C4DE)),
                           shape: RoundedRectangleBorder(
@@ -208,22 +219,56 @@ class _SigninState extends State<Signin> {
     );
   }
 
-  void _signUp() async{
+  void _signIn() async{
+
+    setState(() {
+      isSigning = true;
+    });
+
     String email = _emailController.text;
     String password = _passwordController.text;
 
-    Future<User?> user = _auth.signInwithEmailandPassword(
-      email, 
-      password);
+    User? user = await _auth.signInwithEmailandPassword(email, password);
 
-      if (user != null){
-        print('User succesfully signedIn');
-        Navigator.push(
+    setState(() {
+      isSigning = false;
+    });
+      
+    if (user != null) {
+      showToast(message: 'Signed in successfully.');
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Homepage()),
+      );
+    } else {
+      showToast(message: 'Incorrect email or password.');
+    }
+  }
+
+  _signInWithGoogle() async{
+
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+    try{
+
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+
+      if(googleSignInAccount != null){
+        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken,
+        );
+
+        await _firebaseAuth.signInWithCredential(credential);
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => Homepage()),
         );
-      }else{
-        print('Error');
-      }
+      } 
+    } catch (e) {
+      showToast(message: 'Sign in with google failed.');
+    }
   }
 }

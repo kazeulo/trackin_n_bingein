@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:trackin_n_bingein/authentication/user_auth.dart';
+import 'package:trackin_n_bingein/global/common/toast.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
 import 'package:trackin_n_bingein/screens/signin.dart';
 
@@ -16,6 +17,8 @@ class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
 
   final FirebaseAuthentication _auth = FirebaseAuthentication();
+
+  bool isSigning = false;
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -199,10 +202,7 @@ class _SignupState extends State<Signup> {
                         child: ElevatedButton(
                           onPressed: () {
                             if (_formKey.currentState?.validate() ?? false) {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => Homepage()),
-                              );
+                              _signUp();
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -211,7 +211,9 @@ class _SignupState extends State<Signup> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: Text('Sign Up'),
+                          child: isSigning
+                              ? CircularProgressIndicator(color: Colors.white)
+                              : Text('Sign Up'),
                         ),
                       ),
                       SizedBox(height: 10),
@@ -275,23 +277,27 @@ class _SignupState extends State<Signup> {
   }
 
   void _signUp() async{
+    setState(() {
+      isSigning = true;
+    });
+
     String username = _usernameController.text;
     String email = _emailController.text;
     String password = _confirmPasswordController.text;
 
-    Future<User?> user = _auth.createUserwithEmailandPassword(
-      email, 
-      password);
+    User? user = await _auth.createUserwithEmailandPassword(email, password);
 
-      if (user != null){
-        print('User succesfully created');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => Homepage()),
-        );
-      }else{
-        print('Error');
-      }
+    setState(() {
+      isSigning = false;
+    });
+
+    if (user != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Homepage()),
+      );
+    } else {
+      showToast(message: 'Email already exists.');
+    }
   }
 }
-
