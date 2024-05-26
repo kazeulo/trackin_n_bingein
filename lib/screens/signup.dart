@@ -35,7 +35,7 @@ class _SignupState extends State<Signup> {
         children: [
           // Background Container
           Container(
-            height: 200,
+            height: 250,
             width: double.infinity,
             color: Color(0xFFB0C4DE),
             child: Padding(
@@ -60,7 +60,7 @@ class _SignupState extends State<Signup> {
           ),
           // White Container
           Padding(
-            padding: const EdgeInsets.only(top: 200),
+            padding: const EdgeInsets.only(top: 250),
             child: Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
