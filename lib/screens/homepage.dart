@@ -25,40 +25,44 @@ class _HomepageState extends State<Homepage> {
       body: Stack(
         children: [
           _tabs[_currentIndex],
-          Positioned(
-            child: Column(
-              children: [
-                Container(
-                  color: Color(0xFFA7BCC7),
-                  child: AppBar(
-                    automaticallyImplyLeading: false,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    title: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset('lib/assets/logofin.png', height: 50),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              _currentIndex = 3; // Direct to ProfileTab
-                            });
-                          },
-                          child: CircleAvatar(   // User profile
-                            backgroundColor: Colors.grey[300],
-                            child: Icon(Icons.person, size: 30, color: Colors.white),
+          if (_currentIndex == 0)
+            Positioned(
+              child: Column(
+                children: [
+                  Container(
+                    color: Color(0xFFA7BCC7),
+                    child: AppBar(
+                      automaticallyImplyLeading: false,
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset('lib/assets/logofin.png', height: 50),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                _currentIndex = 3; // Direct to ProfileTab
+                              });
+                            },
+                            child: 
+                            ClipOval(
+                              child: Image.asset(
+                                "lib/assets/placeholder_profile.jpg",
+                                fit: BoxFit.cover,
+                                width: 40,
+                                height: 40,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                if (_currentIndex == 0) ...[
                   GreetingSection(),
                 ],
-              ],
+              ),
             ),
-          ),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -251,7 +255,6 @@ class ListTab extends StatelessWidget { // call media.dart here
   @override
   Widget build(BuildContext context) {
     return Media();
-    
   }
 }
 

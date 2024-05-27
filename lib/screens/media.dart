@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/styling/styling.dart';
 
 class Media extends StatefulWidget {
   const Media({Key? key}) : super(key: key);
@@ -11,31 +12,42 @@ class MediaState extends State<Media> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Media"),
-        backgroundColor: Colors.blueGrey,
-      ),
       body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20.0, top: 60.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              CircleAvatar(
-                radius: 40,
-                backgroundColor: Colors.grey,
-                child: ClipOval(
-                  child: Image.asset(
-                    "lib/assets/placeholder_profile.jpg",
-                    fit: BoxFit.cover,
-                    width: 80,
-                    height: 80,
-                  ),
+              ClipOval(
+                child: Image.asset(
+                  "lib/assets/placeholder_profile.jpg",
+                  fit: BoxFit.cover,
+                  width: 40,
+                  height: 40,
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
-                "Kzlyr, track your media listings",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              SizedBox(width: 10), // Adjust width for horizontal spacing
+              RichText(
+                text: const TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Kzlyr",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Styling.textColor3,
+                      ),
+                    ),
+                    TextSpan(
+                      text: ", track your media listings",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.normal,
+                        color: Styling.textColor3,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
