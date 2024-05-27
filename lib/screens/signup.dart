@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:trackin_n_bingein/authentication/user_auth.dart';
 import 'package:trackin_n_bingein/global/common/toast.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
+import 'package:trackin_n_bingein/screens/navigation.dart';
 import 'package:trackin_n_bingein/screens/signin.dart';
 
 class Signup extends StatefulWidget {
@@ -294,7 +294,7 @@ class _SignupState extends State<Signup> {
     if (user != null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Homepage()),
+        MaterialPageRoute(builder: (context) => Navigation()),
       );
     } else {
       showToast(message: 'Email already exists.');

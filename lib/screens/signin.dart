@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:trackin_n_bingein/authentication/user_auth.dart';
 import 'package:trackin_n_bingein/global/common/toast.dart';
+import 'package:trackin_n_bingein/screens/navigation.dart';
 import 'package:trackin_n_bingein/screens/signup.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
-import '../authentication/user_auth.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);
@@ -238,7 +236,7 @@ class _SigninState extends State<Signin> {
       showToast(message: 'Signed in successfully.');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Homepage()),
+        MaterialPageRoute(builder: (context) => Navigation()),
       );
     } else {
       showToast(message: 'Incorrect email or password.');
@@ -264,7 +262,7 @@ class _SigninState extends State<Signin> {
         await _firebaseAuth.signInWithCredential(credential);
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Homepage()),
+          MaterialPageRoute(builder: (context) => Navigation()),
         );
       } 
     } catch (e) {

@@ -1,117 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/screens/statistics.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 import 'package:trackin_n_bingein/screens/media.dart';
 
-class Homepage extends StatefulWidget {
-  const Homepage({Key? key}) : super(key: key);
+// contains widgets and everything in the homepage only
+class Homepage extends StatelessWidget {
+  const Homepage({super.key});
 
-  @override
-  _HomepageState createState() => _HomepageState();
-}
-
-class _HomepageState extends State<Homepage> {
-  int _currentIndex = 0;
-
-  final List<Widget> _tabs = [
-    HomeTab(),
-    ListTab(),
-    StatisticsTab(),
-    ProfileTab(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          _tabs[_currentIndex],
-          if (_currentIndex == 0)
-            Positioned(
-              child: Column(
-                children: [
-                  Container(
-                    color: Color(0xFFA7BCC7),
-                    child: AppBar(
-                      automaticallyImplyLeading: false,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Image.asset('lib/assets/logofin.png', height: 50),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                _currentIndex = 3; // Direct to ProfileTab
-                              });
-                            },
-                            child: 
-                            ClipOval(
-                              child: Image.asset(
-                                "lib/assets/placeholder_profile.jpg",
-                                fit: BoxFit.cover,
-                                width: 40,
-                                height: 40,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  GreetingSection(),
-                ],
-              ),
-            ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (int index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home, color: _currentIndex == 0 ? Styling.textColor3 : Colors.black),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list,
-                color: _currentIndex == 2 ? Styling.textColor3 : Colors.black),
-            label: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.analytics, color: _currentIndex == 1 ? Styling.textColor3 : Colors.black),
-            label: '',
-          ),
-          
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person, color: _currentIndex == 3 ? Styling.textColor3 : Colors.black),
-            label: '',
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 180.0, left: 16.0, right: 16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 30),
-            WeeklyWrapUpSection(),
-            SizedBox(height: 20),
-            MyListingsSection(),
-          ],
-        ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppBar(
+            automaticallyImplyLeading: false,
+            backgroundColor: Color(0xFFA7BCC7),
+            elevation: 0,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Image.asset('lib/assets/logofin.png', height: 50),
+                InkWell(
+                  onTap: () {
+                    // to add: direct to the profile page
+                  },
+                  child: ClipOval(
+                    child: Image.asset(
+                      "lib/assets/placeholder_profile.jpg",
+                      fit: BoxFit.cover,
+                      width: 40,
+                      height: 40,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          GreetingSection(),
+          Padding(
+            padding: const EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                WeeklyWrapUpSection(),
+                SizedBox(height: 20),
+                MyListingsSection(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -131,20 +69,16 @@ class GreetingSection extends StatelessWidget {
           bottomRight: Radius.circular(25),
         ),
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Hi Kzlyr!', // should be the input username
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
-              ),
-              Text(
-                'Keep track of your media journey with ease.',
-                style: TextStyle(fontSize: 16, color: Colors.black),
-              ),
-            ],
+          Text(
+            'Hi Kzlyr!', // should be the input username
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+          ),
+          Text(
+            'Keep track of your media journey with ease.',
+            style: TextStyle(fontSize: 16, color: Colors.black),
           ),
         ],
       ),
@@ -164,14 +98,15 @@ class WeeklyWrapUpSection extends StatelessWidget {  // not finished
           children: [
             Text(
               'Weekly Wrap-up',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
-            Text('Some informative text.'),
-            CircularProgressIndicator(
-              value: 0.0,
-              strokeWidth: 10,
-              backgroundColor: Colors.grey[200],
+            Text("Here is the summary of the media you've consumed this week."),
+            SizedBox(height: 10),
+            Container(
+              width: 250, // Set your desired width
+              height: 250,
+              child: PieChartWidget(),
             ),
             SizedBox(height: 10),
             ElevatedButton(
@@ -245,39 +180,8 @@ class ListingItem extends StatelessWidget {
             ),
           ),
         ),
-      Text(label),
+        Text(label),
       ],
-    );
-  }
-}
-
-class ListTab extends StatelessWidget { // call media.dart here
-  @override
-  Widget build(BuildContext context) {
-    return Media();
-  }
-}
-
-class StatisticsTab extends StatelessWidget { // call statistics.dart here
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Statistics',
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-}
-
-class ProfileTab extends StatelessWidget { // call profile.dart here
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'Profile',
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-      ),
     );
   }
 }
