@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/screens/statistics.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 import 'package:trackin_n_bingein/screens/media.dart';
 
@@ -97,14 +98,15 @@ class WeeklyWrapUpSection extends StatelessWidget {  // not finished
           children: [
             Text(
               'Weekly Wrap-up',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text("Here is the summary of the media you've consumed this week."),
-            CircularProgressIndicator(
-              value: 0.0,
-              strokeWidth: 10,
-              backgroundColor: Colors.grey[200],
+            SizedBox(height: 10),
+            Container(
+              width: 250, // Set your desired width
+              height: 250,
+              child: PieChartWidget(),
             ),
             SizedBox(height: 10),
             ElevatedButton(
