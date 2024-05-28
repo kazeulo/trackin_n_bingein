@@ -13,6 +13,9 @@ Future main() async {
   await Firebase.initializeApp();
 
   runApp(MaterialApp(
+    theme: ThemeData(
+      scaffoldBackgroundColor: Color.fromARGB(255, 235, 235, 235)
+      ),    
     debugShowCheckedModeBanner: false,
     routes: {
       "/": (context) => Splash(),

@@ -264,7 +264,7 @@ class _SigninState extends State<Signin> {
         var selectedInterests;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Navigation(selectedInterests: selectedInterests, username: '',)),
+          MaterialPageRoute(builder: (context) => Navigation(username: 'Kzlyr', selectedInterests: selectedInterests,)),
         );
       } 
     } catch (e) {
