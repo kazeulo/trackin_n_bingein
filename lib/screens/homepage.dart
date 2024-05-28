@@ -5,7 +5,9 @@ import 'package:trackin_n_bingein/screens/media.dart';
 
 // contains widgets and everything in the homepage only
 class Homepage extends StatelessWidget {
-  const Homepage({super.key});
+  final String username;
+  final List<String> selectedInterests;
+  const Homepage({Key? key, required this.username, required this.selectedInterests}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,7 @@ class Homepage extends StatelessWidget {
               ],
             ),
           ),
-          GreetingSection(),
+          GreetingSection(username: username),
           Padding(
             padding: const EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
             child: Column(
@@ -45,7 +47,7 @@ class Homepage extends StatelessWidget {
               children: [
                 WeeklyWrapUpSection(),
                 SizedBox(height: 20),
-                MyListingsSection(),
+                MyListingsSection(selectedInterests: selectedInterests),
               ],
             ),
           ),
@@ -56,6 +58,10 @@ class Homepage extends StatelessWidget {
 }
 
 class GreetingSection extends StatelessWidget {
+  final String username; 
+
+  const GreetingSection({Key? key, required this.username}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -73,7 +79,7 @@ class GreetingSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Hi Kzlyr!', // should be the input username
+            'Hi $username!',
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
           ),
           Text(
@@ -120,7 +126,11 @@ class WeeklyWrapUpSection extends StatelessWidget {  // not finished
   }
 }
 
-class MyListingsSection extends StatelessWidget { // not finished
+class MyListingsSection extends StatelessWidget {  // not finished
+  final List<String> selectedInterests;
+
+  const MyListingsSection({required this.selectedInterests});
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -134,21 +144,32 @@ class MyListingsSection extends StatelessWidget { // not finished
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: [
-              ListingItem(
-                icon: Icons.book,
-                label: 'Books',
-              ),
-              ListingItem(
-                icon: Icons.podcasts,
-                label: 'Podcasts',
-              ),
-              ListingItem(
-                icon: Icons.movie,
-                label: 'Movies',
-              ),
-              // Add more items as needed
-            ],
+            children: selectedInterests.map((interest) {
+              IconData icon;
+              switch (interest) {
+                case 'Books':
+                  icon = Icons.book;
+                  break;
+                case 'Podcasts':
+                  icon = Icons.podcasts;
+                  break;
+                case 'Movies':
+                  icon = Icons.movie;
+                  break;
+                case 'Social Media':
+                  icon = Icons.group;
+                  break;
+                case 'Games':
+                  icon = Icons.games;
+                  break;
+                case 'Blogs':
+                  icon = Icons.article;
+                  break;
+                default:
+                  icon = Icons.help;
+              }
+              return ListingItem(icon: icon, label: interest);
+            }).toList(),
           ),
         ),
       ],
@@ -156,11 +177,11 @@ class MyListingsSection extends StatelessWidget { // not finished
   }
 }
 
-class ListingItem extends StatelessWidget {
+class ListingItem extends StatelessWidget {  // not finished
   final IconData icon;
   final String label;
 
-  ListingItem({required this.icon, required this.label});
+  const ListingItem({required this.icon, required this.label});
 
   @override
   Widget build(BuildContext context) {
