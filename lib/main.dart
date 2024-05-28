@@ -17,7 +17,7 @@ Future main() async {
       '/signin': (context) => const Signin(),
       '/signup': (context) => const Signup(),
       '/homepage': (context) => const Homepage(),
-      '/profile': (context) => Profile(),
+      '/profile': (context) => const Profile(),
       // '/media': (context) => Media(),
     },
   ));
