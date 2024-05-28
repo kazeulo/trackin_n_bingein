@@ -33,7 +33,7 @@ class _SigninState extends State<Signin> {
         children: [
           // Background Container
           Container(
-            height: 200,
+            height: 250,
             width: double.infinity,
             color: Color(0xFFB0C4DE),
             child: Padding(
@@ -56,9 +56,9 @@ class _SigninState extends State<Signin> {
               ),
             ),
           ),
-          // White Container with Rounded Corners
+          // White Container
           Padding(
-            padding: const EdgeInsets.only(top: 200),
+            padding: const EdgeInsets.only(top: 250),
             child: Container(
               width: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
@@ -97,7 +97,7 @@ class _SigninState extends State<Signin> {
                       controller: _emailController,
                       decoration: InputDecoration(
                         labelText: 'Email',
-                        prefixIcon: Icon(Icons.person),
+                        prefixIcon: Icon(Icons.email),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -234,9 +234,10 @@ class _SigninState extends State<Signin> {
       
     if (user != null) {
       showToast(message: 'Signed in successfully.');
+      var selectedInterests;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Navigation()),
+        MaterialPageRoute(builder: (context) => Navigation(selectedInterests: selectedInterests, username: '',)),
       );
     } else {
       showToast(message: 'Incorrect email or password.');
@@ -260,9 +261,10 @@ class _SigninState extends State<Signin> {
         );
 
         await _firebaseAuth.signInWithCredential(credential);
+        var selectedInterests;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Navigation()),
+          MaterialPageRoute(builder: (context) => Navigation(selectedInterests: selectedInterests, username: '',)),
         );
       } 
     } catch (e) {
