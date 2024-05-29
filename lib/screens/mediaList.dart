@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/screens/details.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
+import 'package:trackin_n_bingein/screens/media.dart';
 
 class MediaList extends StatefulWidget {
-  const MediaList({Key? key}) : super(key: key);
+  final String title;
+  const MediaList({Key? key, required this.title}) : super(key: key);
+  
+
 
   @override
-  _MediaState createState() => _MediaState();
+  _MediaListState createState() => _MediaListState();
 }
 
-class _MediaState extends State<MediaList> {
+class _MediaListState extends State<MediaList> {
   late TextEditingController addController;
 
   @override
   void initState() {
     super.initState();
-
     addController = TextEditingController();
   }
 
   @override
   void dispose() {
-    addController.dispose(); 
+    addController.dispose();
     super.dispose();
   }
 
@@ -28,22 +32,20 @@ class _MediaState extends State<MediaList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Books'),
+        title: Text(widget.title),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFFf9b9b7),
         tooltip: 'Increment',
-        onPressed: () async{
+        onPressed: () async {
           final newItem = await addItem(context);
-
           // to do: if empty or null, showToast saying to enter again
         },
         child: const Icon(Icons.add, color: Colors.white, size: 28),
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 15.0, right: 15.0),
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: ListView(
-          physics: NeverScrollableScrollPhysics(),
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,7 +63,7 @@ class _MediaState extends State<MediaList> {
                     // Add logic to sort media
                   },
                   icon: Icon(Icons.sort),
-                  color: Colors.black, 
+                  color: Colors.black,
                 ),
               ],
             ),
@@ -72,18 +74,21 @@ class _MediaState extends State<MediaList> {
               mainAxisSpacing: 10,
               crossAxisCount: 3,
               children: <Widget>[
-                MediaCard(
-                      imagePath: 'lib/assets/ach.png',
-                      title: 'A Certain Hunger',
-                      onTap: () {
-                        // navigate to details page
-                      },
-                    ),
-                ],
-              ),
-          ]
-        )
-      )
+                MediaListCard(
+                  title: 'A Certain Hunger',
+                  imagePath: 'lib/assets/ach.png',
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Details(title: '',)),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -110,20 +115,18 @@ class _MediaState extends State<MediaList> {
     return null;
   }
 
-  // submit button for adding a media
   void submitMedia(BuildContext context) {
     Navigator.of(context).pop(addController.text);
     addController.clear();
   }
 }
 
-// custom widget for the cards
-class MediaCard extends StatelessWidget {
+class MediaListCard extends StatelessWidget {
   final String imagePath;
   final String title;
   final VoidCallback onTap;
 
-  const MediaCard({
+  const MediaListCard({
     Key? key,
     required this.imagePath,
     required this.title,
@@ -164,4 +167,3 @@ class MediaCard extends StatelessWidget {
     );
   }
 }
-
