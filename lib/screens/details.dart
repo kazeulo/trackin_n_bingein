@@ -7,7 +7,7 @@ class Details extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Implement the UI for displaying details
+    //for details UI
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
