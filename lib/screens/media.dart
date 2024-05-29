@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/screens/mediaList.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 
 class Media extends StatefulWidget {
@@ -32,8 +33,6 @@ class _MediaState extends State<Media> {
         tooltip: 'Increment',
         onPressed: () async{
           final newMedia = await addMedia(context);
-
-          // to do: if empty or null, showToast saying to enter again
         },
         child: const Icon(Icons.add, color: Colors.white, size: 28),
       ),
@@ -98,17 +97,47 @@ class _MediaState extends State<Media> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
-            GridView.count(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 3,
-              children: const <Widget>[
-                MediaCard(name: 'Books', image: 'lib/assets/books.png'),
-                MediaCard(name: 'Music', image: 'lib/assets/music.png'),
-              ],
+            SizedBox(height: 5.0),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MediaList()
+                  ),
+                );
+              },
+              child: Container(
+                padding: const EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(
+                    color: Colors.transparent,
+                    width: 0,
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Books",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        // todo: add logic to delete the item
+                      },
+                      icon: Icon(Icons.delete),
+                      color: const Color.fromARGB(255, 137, 137, 137), 
+                    ),
+                  ],
+                ),
+              ),
             ),
           ],
         ),
@@ -143,60 +172,5 @@ class _MediaState extends State<Media> {
   void submitMedia(BuildContext context) {
     Navigator.of(context).pop(addController.text);
     addController.clear();
-  }
-}
-
-class MediaCard extends StatelessWidget {
-  final String name;
-  final String image;
-
-  const MediaCard({Key? key, required this.name, required this.image})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      clipBehavior: Clip.hardEdge,
-      decoration: BoxDecoration(
-        color: Colors.teal[100],
-        borderRadius: BorderRadius.circular(10.0),
-        border: Border.all(
-          color: Colors.transparent,
-          width: 0,
-        ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            bottom: 0,
-            right: 0,
-            child: Image.asset(
-              image,
-              width: 100,
-              height: 100,
-              fit: BoxFit.cover,
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                name,
-                style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

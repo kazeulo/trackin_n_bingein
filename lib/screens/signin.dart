@@ -64,10 +64,6 @@ class _SigninState extends State<Signin> {
               padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50),
-                  topRight: Radius.circular(50),
-                ),
               ),
               child: SingleChildScrollView(
                 child: Column(
