@@ -73,6 +73,9 @@ flutter:
     - lib/assets/splash.png
     - lib/assets/logofin.png
     - lib/assets/placeholder_profile.jpg
+    - lib/assets/books.png
+    - lib/assets/music.png
+    - lib/assets/ach.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

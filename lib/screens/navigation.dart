@@ -9,9 +9,9 @@ import 'package:trackin_n_bingein/screens/media.dart';
 // separate file for centralization purposes
 class Navigation extends StatefulWidget {
   final String username;
-  final List<String> selectedInterests;
+  final List<String>? selectedInterests;
 
-  const Navigation({Key? key, required this.username, required this.selectedInterests}) : super(key: key);
+  const Navigation({super.key, required this.username, required this.selectedInterests});
 
   @override
   _NavigationState createState() => _NavigationState();
@@ -19,18 +19,13 @@ class Navigation extends StatefulWidget {
 
 class _NavigationState extends State<Navigation> {
   int _currentIndex = 0;
-  late List<Widget> _tabs;
 
-  @override
-  void initState() {
-    super.initState();
-    _tabs = [
-      Homepage(selectedInterests: widget.selectedInterests, username: '',),
-      Statistics(),
-      Media(),
-      Profile(),
-    ];
-  }
+  final List<Widget> _tabs = [
+    Homepage(selectedInterests: [], username: '',),
+    Statistics(),
+    Media(),
+    Profile(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +45,12 @@ class _NavigationState extends State<Navigation> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.analytics, 
+            icon: Icon(Icons.list, 
               color: _currentIndex == 1 ? Styling.textColor3 : Colors.black),
             label: 'Media',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list,
+            icon: Icon(Icons.analytics,
                 color: _currentIndex == 2 ? Styling.textColor3 : Colors.black),
             label: 'Statistics',
           ),
