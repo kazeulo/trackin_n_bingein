@@ -34,7 +34,7 @@ class _MediaState extends State<MediaList> {
         backgroundColor: Color(0xFFf9b9b7),
         tooltip: 'Increment',
         onPressed: () async{
-          final newMedia = await addMedia(context);
+          final newItem = await addItem(context);
 
           // to do: if empty or null, showToast saying to enter again
         },
@@ -87,15 +87,15 @@ class _MediaState extends State<MediaList> {
     );
   }
 
-  Future<String?> addMedia(BuildContext context) async {
+  Future<String?> addItem(BuildContext context) async {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Add Media'),
+        title: Text('New book'),
         content: TextField(
           controller: addController,
           autofocus: true,
-          decoration: InputDecoration(hintText: 'Add media'),
+          decoration: InputDecoration(hintText: 'Add book'),
         ),
         actions: [
           TextButton(

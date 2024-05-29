@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:trackin_n_bingein/authentication/user_auth.dart';
+import 'package:trackin_n_bingein/backend/models/userModel.dart';
+import 'package:trackin_n_bingein/backend/user_repository.dart';
 import 'package:trackin_n_bingein/global/common/toast.dart';
 import 'package:trackin_n_bingein/screens/interests.dart';
 import 'package:trackin_n_bingein/screens/signin.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -16,6 +21,7 @@ class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
 
   final FirebaseAuthentication _auth = FirebaseAuthentication();
+  final UserRepo = Get.put(UserRepository());
 
   bool isSigning = false;
 
@@ -275,7 +281,7 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  void _signUp() async{
+  void _signUp() async {
     setState(() {
       isSigning = true;
     });
@@ -284,6 +290,7 @@ class _SignupState extends State<Signup> {
     String email = _emailController.text;
     String password = _confirmPasswordController.text;
 
+    // Assuming you have a method to create user in FirebaseAuth
     User? user = await _auth.createUserwithEmailandPassword(email, password);
 
     setState(() {
@@ -291,6 +298,12 @@ class _SignupState extends State<Signup> {
     });
 
     if (user != null) {
+      // Create a UserModel instance
+      UserModel newUser = UserModel(username: username, email: email, password: password);
+
+      // Pass the UserModel instance to UserRepository to store in Firestore
+      UserRepository.instance.createUser(newUser);
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Interests(username: username)),

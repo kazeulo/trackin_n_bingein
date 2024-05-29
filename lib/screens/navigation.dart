@@ -45,12 +45,12 @@ class _NavigationState extends State<Navigation> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list, 
+            icon: Icon(Icons.analytics, 
               color: _currentIndex == 1 ? Styling.textColor3 : Colors.black),
             label: 'Media',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.analytics,
+            icon: Icon(Icons.list,
                 color: _currentIndex == 2 ? Styling.textColor3 : Colors.black),
             label: 'Statistics',
           ),

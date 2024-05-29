@@ -14,7 +14,7 @@ Future main() async {
 
   runApp(MaterialApp(
     theme: ThemeData(
-      scaffoldBackgroundColor: Color.fromARGB(255, 250, 253, 255)
+      scaffoldBackgroundColor: Color.fromARGB(255, 233, 246, 255)
       ),    
     debugShowCheckedModeBanner: false,
     routes: {
