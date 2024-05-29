@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/screens/addItem.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 
 class MediaList extends StatefulWidget {
@@ -34,8 +35,12 @@ class _MediaState extends State<MediaList> {
         backgroundColor: Color(0xFFf9b9b7),
         tooltip: 'Increment',
         onPressed: () async{
-          final newItem = await addItem(context);
-
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+            builder: (context) => AddItem(),
+            ),
+          );
           // to do: if empty or null, showToast saying to enter again
         },
         child: const Icon(Icons.add, color: Colors.white, size: 28),
@@ -85,35 +90,6 @@ class _MediaState extends State<MediaList> {
         )
       )
     );
-  }
-
-  Future<String?> addItem(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('New book'),
-        content: TextField(
-          controller: addController,
-          autofocus: true,
-          decoration: InputDecoration(hintText: 'Add book'),
-        ),
-        actions: [
-          TextButton(
-            child: Text('SUBMIT'),
-            onPressed: () {
-              submitMedia(context);
-            },
-          )
-        ],
-      ),
-    );
-    return null;
-  }
-
-  // submit button for adding a media
-  void submitMedia(BuildContext context) {
-    Navigator.of(context).pop(addController.text);
-    addController.clear();
   }
 }
 
