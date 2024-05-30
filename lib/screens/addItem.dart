@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:trackin_n_bingein/backend/media_repository.dart';
-import 'package:trackin_n_bingein/backend/models/mediaModel';
+import 'package:trackin_n_bingein/backend/models/MediaModel';
 
 class AddItem extends StatefulWidget {
   @override
@@ -12,12 +12,10 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
-
   final Mediarepo = Get.put(MediaRepository());
 
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
-  final TextEditingController _statusController = TextEditingController();
+  final TextEditingController _authorController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _maxDurationController = TextEditingController();
   File? _image;
@@ -39,10 +37,10 @@ class _AddItemState extends State<AddItem> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Item'),
+        title: const Text('Add Item'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
             GestureDetector(
@@ -52,35 +50,49 @@ class _AddItemState extends State<AddItem> {
                       width: 100,
                       height: 100,
                       color: Colors.grey[200],
-                      child: Icon(Icons.add_a_photo, size: 50),
+                      child: const Icon(Icons.add_a_photo, size: 50),
                     )
                   : Image.file(_image!, width: 100, height: 100, fit: BoxFit.cover),
             ),
             TextFormField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(
+                labelText: 'Name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                )),
             ),
             TextFormField(
-              controller: _categoryController,
-              decoration: InputDecoration(labelText: 'Category'),
-            ),
-            TextFormField(
-              controller: _statusController,
-              decoration: InputDecoration(labelText: 'Status'),
+              controller: _authorController,
+              decoration: InputDecoration(
+                labelText: 'Author/Creator',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                )),
             ),
             TextFormField(
               controller: _descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
+              maxLength: 200,
+              decoration: const InputDecoration(
+                labelText: 'Description',
+                counterText: '',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                ),
+              ),
+              maxLines: null,  // Allows the field to expand as the user types more text
             ),
             TextFormField(
               controller: _maxDurationController,
-              decoration: InputDecoration(labelText: 'Max Duration'),
-              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Max Duration',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                )),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-
                 int maxDuration = 0;
                 try {
                   maxDuration = int.parse(_maxDurationController.text);
@@ -91,8 +103,9 @@ class _AddItemState extends State<AddItem> {
                 // Create media model with user inputs
                 MediaModel newMedia = MediaModel(
                   name: _nameController.text,
-                  category: _categoryController.text,
-                  status: _statusController.text,
+                  author: _authorController.text,
+                  category: '',
+                  status: '',
                   description: _descriptionController.text,
                   maxDuration: maxDuration,
                   image: _image
@@ -100,7 +113,7 @@ class _AddItemState extends State<AddItem> {
 
                 MediaRepository.instance.createUser(newMedia);
               },
-              child: Text('Add Media'),
+              child: const Text('Add Media'),
             ),
           ],
         ),
