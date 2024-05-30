@@ -78,19 +78,13 @@ class Buttons {
       style: ElevatedButton.styleFrom(
         foregroundColor: ButtonStyling.buttonTextColor,
         backgroundColor: ButtonStyling.buttonColor1,
-        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
-        textStyle: TextStyle(fontSize: 20),
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+        textStyle: TextStyle(fontSize: 18),
         elevation: 3,
       ),
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Details(
-              title: '',
-            ),
-          ),
-        );
+        Navigator.pop(context);
+    
       },
     );
   }
@@ -107,15 +101,22 @@ class Buttons {
         elevation: 3,
       ),
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Details(
-              title: '',
-            ),
-          ),
-        );
       },
+    );
+  }
+
+  //add media
+    static Widget addButton(BuildContext context, VoidCallback onPressed) {
+    return ElevatedButton(
+      child: const Text('Add Media'),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: ButtonStyling.primaryColor,
+        backgroundColor: ButtonStyling.buttonTextColor,
+        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+        textStyle: TextStyle(fontSize: 20),
+        elevation: 3,
+      ),
+      onPressed: onPressed,
     );
   }
 }
