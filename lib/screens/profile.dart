@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:trackin_n_bingein/screens/editprofile.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 
 class Profile extends StatelessWidget {
@@ -52,10 +53,12 @@ class Profile extends StatelessWidget {
                       buildCardWithIcon(
                         title: 'Edit Profile',
                         icon: Icons.person,
-                        
-                        
+                        // implement b-end
                         onTap: () {
-                          // implement b-end
+                          Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const EditProfile()),
+                    );
                         },
                       ),
                       SizedBox(height: 10),
