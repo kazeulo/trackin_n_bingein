@@ -6,8 +6,7 @@ import 'package:trackin_n_bingein/styling/styling.dart';
 // contains widgets and everything in the homepage only
 class Homepage extends StatelessWidget {
   final String username;
-  final List<String> selectedInterests;
-  const Homepage({Key? key, required this.username, required this.selectedInterests}) : super(key: key);
+  const Homepage({Key? key, required this.username}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +49,7 @@ class Homepage extends StatelessWidget {
               children: [
                 WeeklyWrapUpSection(),
                 SizedBox(height: 20),
-                MyListingsSection(selectedInterests: selectedInterests),
+                MyListingsSection(),
               ],
             ),
           ),
@@ -129,50 +128,37 @@ class WeeklyWrapUpSection extends StatelessWidget {  // not finished
   }
 }
 
-class MyListingsSection extends StatelessWidget {  // not finished
-  final List<String> selectedInterests;
-
-  const MyListingsSection({required this.selectedInterests});
-
+class MyListingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'My Listings',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        Padding(
+          padding: const EdgeInsets.only(left: 16, top: 8),
+          child: Text(
+            'My Listings',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
         ),
         SizedBox(height: 10),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: selectedInterests.map((interest) {
-              IconData icon;
-              switch (interest) {
-                case 'Books':
-                  icon = Icons.book;
-                  break;
-                case 'Podcasts':
-                  icon = Icons.podcasts;
-                  break;
-                case 'Movies':
-                  icon = Icons.movie;
-                  break;
-                case 'Social Media':
-                  icon = Icons.group;
-                  break;
-                case 'Games':
-                  icon = Icons.games;
-                  break;
-                case 'Blogs':
-                  icon = Icons.article;
-                  break;
-                default:
-                  icon = Icons.help;
-              }
-              return ListingItem(icon: icon, label: interest);
-            }).toList(),
+            children: [
+              ListingItem(
+                image: 'books.jpg', 
+                label: 'Books',
+              ),
+              ListingItem(
+                image: 'movie.jpg', 
+                label: 'Movies',
+              ),
+              ListingItem(
+                image: 'music.png',
+                label: 'Podcasts',
+              ),
+            ],
           ),
         ),
       ],
@@ -180,32 +166,43 @@ class MyListingsSection extends StatelessWidget {  // not finished
   }
 }
 
-class ListingItem extends StatelessWidget {  // not finished
-  final IconData icon;
+class ListingItem extends StatelessWidget {
+  final String image;
   final String label;
 
-  const ListingItem({required this.icon, required this.label});
+  const ListingItem({
+    Key? key,
+    required this.image,
+    required this.label,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Card(
-          elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: Container(
-            width: 100,
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(icon, size: 40, color: Colors.blue),
-              ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Container(
+            width: 120,
+            height: 120,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('lib/assets/$image'),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
-        ),
-        Text(label),
-      ],
+          SizedBox(height: 8),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
