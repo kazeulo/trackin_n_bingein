@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
-import 'package:trackin_n_bingein/screens/statistics.dart'; // Import Firestore
+import 'package:cloud_firestore/cloud_firestore.dart'; 
+import 'package:trackin_n_bingein/backend/userFetch.dart';
+import 'package:trackin_n_bingein/screens/statistics.dart'; 
 
 // Modify Homepage to be a StatefulWidget so it can fetch data asynchronously
 class Homepage extends StatefulWidget {
@@ -13,31 +14,13 @@ class Homepage extends StatefulWidget {
 
 class _HomepageState extends State<Homepage> {
   late Future<String> _usernameFuture;
+  late final UserService _userService;
 
   @override
   void initState() {
     super.initState();
-    _usernameFuture = fetchUsername(widget.email);
-  }
-
-  Future<String> fetchUsername(String email) async {
-    try {
-      // Fetch username from Firestore based on email
-      QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
-          .collection('User')
-          .where('Email', isEqualTo: email)
-          .get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        // Assuming there is only one document with the given email
-        return querySnapshot.docs.first.get('Username');
-      } else {
-        throw Exception('No user found with email: $email');
-      }
-    } catch (e) {
-      print('Error fetching username: $e');
-      throw Exception('Failed to fetch username');
-    }
+    _userService = UserService(widget.email);
+    _usernameFuture = _userService.fetchUsername(widget.email);
   }
 
   @override
@@ -141,7 +124,8 @@ class GreetingSection extends StatelessWidget {
   }
 }
 
-class WeeklyWrapUpSection extends StatelessWidget {  // not finished
+class WeeklyWrapUpSection extends StatelessWidget { 
+  
   @override 
   Widget build(BuildContext context) {
     return Card(
@@ -165,7 +149,12 @@ class WeeklyWrapUpSection extends StatelessWidget {  // not finished
             ),
             SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Statistics()),
+                );
+              },
               child: Text('View my statistics'),
             ),
           ],
