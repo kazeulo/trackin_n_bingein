@@ -12,6 +12,7 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
+
   final Mediarepo = Get.put(MediaRepository());
 
   final TextEditingController _nameController = TextEditingController();
@@ -80,6 +81,7 @@ class _AddItemState extends State<AddItem> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+
                 int maxDuration = 0;
                 try {
                   maxDuration = int.parse(_maxDurationController.text);
@@ -89,12 +91,22 @@ class _AddItemState extends State<AddItem> {
 
                 // Create media model with user inputs
                 MediaModel newMedia = MediaModel(
+<<<<<<< HEAD
                     name: _nameController.text,
                     category: _categoryController.text,
                     status: _statusController.text,
                     description: _descriptionController.text,
                     maxDuration: maxDuration,
                     image: _image);
+=======
+                  name: _nameController.text,
+                  category: _categoryController.text,
+                  status: _statusController.text,
+                  description: _descriptionController.text,
+                  maxDuration: maxDuration,
+                  image: _image
+                );
+>>>>>>> c941ef312a2ad0f124a7cc3ead004913ca3f9ee1
 
                 MediaRepository.instance.createUser(newMedia);
               },
