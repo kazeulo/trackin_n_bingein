@@ -79,6 +79,13 @@ flutter:
     - lib/assets/books.png
     - lib/assets/music.png
     - lib/assets/ach.png
+    - lib/assets/banner.png
+    - lib/assets/banner1.png
+    - lib/assets/books.jpg
+    - lib/assets/movie.jpg
+ 
+    
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
