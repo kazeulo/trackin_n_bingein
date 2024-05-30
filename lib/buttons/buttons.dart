@@ -70,6 +70,54 @@ class Buttons {
       },
     );
   }
+
+  // cancel
+  static Widget cancelButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text('Mark as finished'),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: ButtonStyling.primaryColor,
+        backgroundColor: ButtonStyling.buttonTextColor,
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        textStyle: TextStyle(fontSize: 18),
+        elevation: 3,
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Details(
+              title: '',
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  //savebutton
+  static Widget saveButton(BuildContext context) {
+    return ElevatedButton(
+      child: const Text('Mark as finished'),
+      style: ElevatedButton.styleFrom(
+        foregroundColor: ButtonStyling.primaryColor,
+        backgroundColor: ButtonStyling.buttonTextColor,
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        textStyle: TextStyle(fontSize: 18),
+        elevation: 3,
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Details(
+              title: '',
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
 
 
