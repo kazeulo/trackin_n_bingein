@@ -24,6 +24,7 @@ class _DetailsState extends State<Details> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
