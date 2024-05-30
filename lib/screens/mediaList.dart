@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackin_n_bingein/screens/details.dart';
+import 'package:trackin_n_bingein/screens/addItem.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 import 'package:trackin_n_bingein/screens/media.dart';
 
@@ -37,8 +38,13 @@ class _MediaListState extends State<MediaList> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFFf9b9b7),
         tooltip: 'Increment',
-        onPressed: () async {
-          final newItem = await addItem(context);
+        onPressed: () async{
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+            builder: (context) => AddItem(),
+            ),
+          );
           // to do: if empty or null, showToast saying to enter again
         },
         child: const Icon(Icons.add, color: Colors.white, size: 28),
