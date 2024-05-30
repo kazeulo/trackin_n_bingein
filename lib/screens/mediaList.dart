@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackin_n_bingein/screens/details.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
-import 'package:trackin_n_bingein/screens/media.dart';
 
 class MediaList extends StatefulWidget {
   final String title;
@@ -80,7 +79,7 @@ class _MediaListState extends State<MediaList> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Details(title: '',)),
+                      MaterialPageRoute(builder: (context) => const Details(title: 'A Certain Hunger',)),
                     );
                   },
                 ),
