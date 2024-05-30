@@ -232,22 +232,20 @@ class _SigninState extends State<Signin> {
       showToast(message: 'Signed in successfully.');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Navigation(username: '',)),
+        MaterialPageRoute(builder: (context) => Navigation(email: email,)),
       );
     } else {
       showToast(message: 'Incorrect email or password.');
     }
   }
 
-  _signInWithGoogle() async{
-
+  _signInWithGoogle() async {
     final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-    try{
-
+    try {
       final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
 
-      if(googleSignInAccount != null){
+      if (googleSignInAccount != null) {
         final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
 
         final AuthCredential credential = GoogleAuthProvider.credential(
@@ -255,14 +253,19 @@ class _SigninState extends State<Signin> {
           accessToken: googleSignInAuthentication.accessToken,
         );
 
-        await _firebaseAuth.signInWithCredential(credential);
+        final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+        // Access the user's email
+        String email = userCredential.user!.email!;
+
+        // Navigate to the next screen
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Navigation(username: '',)),
+          MaterialPageRoute(builder: (context) => Navigation(email: email)),
         );
-      } 
+      }
     } catch (e) {
-      showToast(message: 'Sign in with google failed.');
+      showToast(message: 'Sign in with Google failed.');
     }
   }
 }

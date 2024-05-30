@@ -5,12 +5,10 @@ import 'package:trackin_n_bingein/screens/statistics.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 import 'package:trackin_n_bingein/screens/media.dart';
 
-// contains the bar 
-// separate file for centralization purposes
 class Navigation extends StatefulWidget {
-  final String username;
+  final String email;
 
-  const Navigation({Key? key, required this.username}) : super(key: key);
+  const Navigation({Key? key, required this.email}) : super(key: key);
 
   @override
   _NavigationState createState() => _NavigationState();
@@ -19,12 +17,18 @@ class Navigation extends StatefulWidget {
 class _NavigationState extends State<Navigation> {
   int _currentIndex = 0;
 
-  final List<Widget> _tabs = [
-    Homepage(username: '',),
-    Statistics(),
-    Media(),
-    Profile(),
-  ];
+  late List<Widget> _tabs;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabs = [
+      Homepage(email: widget.email),
+      Statistics(),
+      Media(),
+      Profile(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {

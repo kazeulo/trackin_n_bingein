@@ -305,7 +305,8 @@ class _SignupState extends State<Signup> {
       UserModel newUser = UserModel(
         username: username, 
         email: email, 
-        password: password
+        password: password, 
+        profilePicture: null
       );
 
       // pass user model to UserRepository instance to store in the data base
@@ -313,7 +314,7 @@ class _SignupState extends State<Signup> {
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Navigation(username: username)),
+        MaterialPageRoute(builder: (context) => Navigation(email: email)),
       );
     } else {
       showToast(message: 'Email already exists.');
