@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/backend/models/categoryModel.dart';
 import 'package:trackin_n_bingein/screens/mediaList.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 
@@ -81,6 +83,8 @@ class MediaCard extends StatelessWidget {
 class _MediaState extends State<Media> {
   List<MediaCard> mediaList = [];
   late TextEditingController addController;
+  late String userId;
+  late bool loading = true;
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -88,12 +92,56 @@ class _MediaState extends State<Media> {
   void initState() {
     super.initState();
     addController = TextEditingController();
+    getCurrentUser();
+    fetchCategories();
   }
 
   @override
   void dispose() {
     addController.dispose(); // Corrected controller disposal
     super.dispose();
+  }
+
+  // Function to get the current user
+  void getCurrentUser() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      userId = user.uid;
+    }
+  }
+
+  // fetching categories
+  Future<void> fetchCategories() async{
+    try{
+      // fetch categories from Firestore
+      QuerySnapshot querySnapshot = await firestore
+        .collection('Category')
+        .where('UserId', isEqualTo: userId)
+        .get();
+
+      setState((){
+        loading = false;
+      });
+
+      List<MediaCard> tempMediaList = [];
+
+      // iterate through the documents and create MediaCard for each category
+      querySnapshot.docs.forEach((doc){
+        String categoryName = doc['Name'];
+        tempMediaList.add(
+          MediaCard(
+            Mediatitle: categoryName,
+            imagePath: "lib/assets/books.jpg",
+          ),
+        );
+      });
+
+      setState((){
+        mediaList = tempMediaList;
+      });
+    } catch (e){
+        print('Error Fetching categories: $e');
+    }
   }
 
   @override
@@ -193,9 +241,21 @@ class _MediaState extends State<Media> {
                   ],
                 ),
                 SizedBox(height: 5.0),
-                Column(
-                  children: mediaList,
-                ),
+                if (loading)
+                  CircularProgressIndicator() // Show loading indicator
+                else if (mediaList.isEmpty)
+                  Text(
+                    "Start tracking",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Styling.textColor3,
+                    ),
+                  )
+                else
+                  Column(
+                    children: mediaList,
+                  ),
               ],
             ),
           ],
@@ -228,14 +288,17 @@ class _MediaState extends State<Media> {
 
   // submit button for adding a media
   Future<void> submitMedia(BuildContext context) async {
-
     final mediaName = addController.text;
 
     try {
-      await firestore.collection('media').add({
-        'Name': mediaName,
-        //'UserId': userId, 
-      });
+      // Create a new instance of CategoryModel
+      final newCategory = CategoryModel(
+        userId: userId,
+        name: mediaName,
+      );
+
+      // Convert CategoryModel to JSON and add to Firestore
+      await firestore.collection('Category').add(newCategory.toJson());
 
       setState(() {
         // Add the new media card to the list
