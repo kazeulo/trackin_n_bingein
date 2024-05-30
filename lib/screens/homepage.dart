@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:trackin_n_bingein/screens/profile.dart';
 import 'package:trackin_n_bingein/screens/statistics.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 
@@ -24,10 +23,7 @@ class Homepage extends StatelessWidget {
                 Image.asset('lib/assets/logofin.png', height: 50),
                 InkWell(
                   onTap: () {
-                    Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const Profile()),
-                          );
+                    // to add: direct to the profile page
                   },
                   child: ClipOval(
                     child: Image.asset(
