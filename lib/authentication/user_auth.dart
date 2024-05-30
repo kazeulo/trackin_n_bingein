@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:trackin_n_bingein/global/common/toast.dart';
 
-class FirebaseAuthentication {
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+class FirebaseAuthentication {
 
   Future<User?> createUserwithEmailandPassword(
     String email,
@@ -42,4 +42,49 @@ class FirebaseAuthentication {
     }
     return null;
   }
+
+  //delete account
+
+Future<void> deleteUserAccount() async {
+  try {
+    await _auth.currentUser!.delete();
+  } on FirebaseAuthException catch (e) {
+    if (e.code == "requires-recent-login") {
+      await _reauthenticateAndDelete();
+    } else {
+      showToast(message: 'An error occurred: ${e.code}');
+    }
+  } catch (e) {
+    showToast(message: 'An unexpected error occurred.');
+  }
 }
+
+Future<void> _reauthenticateAndDelete() async {
+  try {
+    final User? user = _auth.currentUser;
+    if (user == null) {
+      showToast(message: 'No user is currently signed in.');
+      return;
+    }
+
+    final providerData = user.providerData.first;
+
+    if (providerData.providerId == AppleAuthProvider.PROVIDER_ID) {
+      await user.reauthenticateWithProvider(AppleAuthProvider());
+    } else if (providerData.providerId == GoogleAuthProvider.PROVIDER_ID) {
+      await user.reauthenticateWithProvider(GoogleAuthProvider());
+    } else {
+      // Add support for other providers if needed
+      showToast(message: 'Re-authentication method not supported.');
+      return;
+    }
+
+    await user.delete();
+    showToast(message: 'Account deleted successfully.');
+  } catch (e) {
+    showToast(message: 'Re-authentication failed: ${e.toString()}');
+  }
+}
+
+}
+
