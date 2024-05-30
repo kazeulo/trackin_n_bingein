@@ -8,7 +8,7 @@ import 'package:trackin_n_bingein/screens/media.dart';
 class Navigation extends StatefulWidget {
   final String email;
 
-  const Navigation({Key? key, required this.email}) : super(key: key);
+  const Navigation({super.key, required this.email});
 
   @override
   _NavigationState createState() => _NavigationState();
@@ -26,7 +26,7 @@ class _NavigationState extends State<Navigation> {
       Homepage(email: widget.email),
       Statistics(),
       Media(),
-      Profile(),
+      Profile(email:widget.email),
     ];
   }
 
