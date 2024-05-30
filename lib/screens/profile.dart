@@ -108,6 +108,7 @@ class Profile extends StatelessWidget {
                             icon: Icons.logout,
                             onTap: () {
                               // implement b-end
+                              // no backend yet
                             },
                           ),
                           SizedBox(height: 10),

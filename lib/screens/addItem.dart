@@ -54,7 +54,8 @@ class _AddItemState extends State<AddItem> {
                       color: Colors.grey[200],
                       child: Icon(Icons.add_a_photo, size: 50),
                     )
-                  : Image.file(_image!, width: 100, height: 100, fit: BoxFit.cover),
+                  : Image.file(_image!,
+                      width: 100, height: 100, fit: BoxFit.cover),
             ),
             TextFormField(
               controller: _nameController,
@@ -90,6 +91,14 @@ class _AddItemState extends State<AddItem> {
 
                 // Create media model with user inputs
                 MediaModel newMedia = MediaModel(
+<<<<<<< HEAD
+                    name: _nameController.text,
+                    category: _categoryController.text,
+                    status: _statusController.text,
+                    description: _descriptionController.text,
+                    maxDuration: maxDuration,
+                    image: _image);
+=======
                   name: _nameController.text,
                   category: _categoryController.text,
                   status: _statusController.text,
@@ -97,6 +106,7 @@ class _AddItemState extends State<AddItem> {
                   maxDuration: maxDuration,
                   image: _image
                 );
+>>>>>>> c941ef312a2ad0f124a7cc3ead004913ca3f9ee1
 
                 MediaRepository.instance.createUser(newMedia);
               },
