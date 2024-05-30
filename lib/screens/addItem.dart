@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:trackin_n_bingein/backend/media_repository.dart';
 import 'package:trackin_n_bingein/backend/models/mediaModel';
+import 'package:trackin_n_bingein/buttons/buttons.dart';
+import 'package:trackin_n_bingein/styling/styling.dart';
 
 class AddItem extends StatefulWidget {
   @override
@@ -34,6 +36,11 @@ class _AddItemState extends State<AddItem> {
     });
   }
 
+  // for description
+  String description = '';
+  int descriptionWordCount = 0;
+  final int maxDescriptionWordCount = 500;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,40 +63,101 @@ class _AddItemState extends State<AddItem> {
                   : Image.file(_image!,
                       width: 100, height: 100, fit: BoxFit.cover),
             ),
+            Center(
+              child: Text(
+                "Click to choose photo for your media",
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  color: Styling.textColor3,
+                ),
+              ),
+            ),
+            SizedBox(height: 30),
             TextFormField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'Name'),
+              decoration: InputDecoration(labelText: 'Name',
+              prefixIcon: Icon(Icons.bookmark),
+              ),
             ),
             TextFormField(
               controller: _authorController,
-              decoration: InputDecoration(labelText: 'Author or Creator'),
+              decoration: InputDecoration(labelText: 'Author or Creator',
+              prefixIcon: Icon(Icons.person),
+              ),
             ),
-            TextFormField(
-              controller: _descriptionController,
-              decoration: InputDecoration(labelText: 'Description',
-              counterText: ''),
-              inputFormatters: [
-                LengthLimitingTextInputFormatter(
-                  200,
-                ), //n is maximum number of characters you want in textfield
-              ],
-              
-            ),
-            
             TextFormField(
               controller: _maxDurationController,
-              decoration: InputDecoration(labelText: 'Max Duration'),
+              decoration: InputDecoration(labelText: 'Max Duration',
+              prefixIcon: Icon(Icons.punch_clock),
+              ),
               keyboardType: TextInputType.number,
             ),
+
+            // for description
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                int maxDuration = 0;
-                try {
-                  maxDuration = int.parse(_maxDurationController.text);
-                } catch (e) {
-                  print('Error parsing max duration: $e');
-                }
+            Stack(
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Description',
+                    prefixIcon: Icon(Icons.description),
+                    border: OutlineInputBorder(),
+                  ),
+                  maxLines: null,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a description';
+                    } else if (descriptionWordCount > maxDescriptionWordCount) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Description exceeds word limit'),
+                        ),
+                      );
+                      return "error";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    setState(() {
+                      description = value;
+                      descriptionWordCount = value.trim().split(' ').length;
+                    });
+                  },
+                ),
+                 SizedBox(height: 20),
+                Positioned(
+                  bottom:
+                      5.0, 
+                  right:
+                      10.0, 
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Text(
+                      '$descriptionWordCount / $maxDescriptionWordCount words',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Buttons.cancelButton(context),
+                ElevatedButton(
+                  onPressed: () {
+                    int maxDuration = 0;
+                    try {
+                      maxDuration = int.parse(_maxDurationController.text);
+                    } catch (e) {
+                      print('Error parsing max duration: $e');
+                    }
 
                 // Create media model with user inputs
                 MediaModel newMedia = MediaModel(
@@ -99,9 +167,18 @@ class _AddItemState extends State<AddItem> {
                     maxDuration: maxDuration,
                     image: _image, userId: '');
 
-                MediaRepository.instance.createUser(newMedia);
-              },
-              child: Text('Add Media'),
+                    MediaRepository.instance.createUser(newMedia);
+                  },
+                  child: Text('Add Media'),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: ButtonStyling.primaryColor,
+                    backgroundColor: ButtonStyling.buttonTextColor,
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
+                    textStyle: TextStyle(fontSize: 18),
+                    elevation: 3,
+                  ),
+                ),
+              ],
             ),
           ],
         ),
