@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:trackin_n_bingein/screens/details.dart';
 import 'package:trackin_n_bingein/screens/addItem.dart';
-import 'package:trackin_n_bingein/styling/styling.dart';
+import 'package:trackin_n_bingein/screens/homepage.dart';
+import 'package:trackin_n_bingein/screens/profile.dart';
 
 class MediaList extends StatefulWidget {
   final String title;
@@ -13,17 +18,27 @@ class MediaList extends StatefulWidget {
 
 class _MediaListState extends State<MediaList> {
   late TextEditingController addController;
+  late String userId;
 
   @override
   void initState() {
     super.initState();
     addController = TextEditingController();
+    getCurrentUser();
   }
 
   @override
   void dispose() {
     addController.dispose();
     super.dispose();
+  }
+
+  // Function to get the current user
+  void getCurrentUser() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      userId = user.uid;
+    }
   }
 
   @override
@@ -35,92 +50,64 @@ class _MediaListState extends State<MediaList> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFFf9b9b7),
         tooltip: 'Increment',
-        onPressed: () async{
+        onPressed: () async {
           Navigator.push(
             context,
             MaterialPageRoute(
-            builder: (context) => AddItem(),
+              builder: (context) => AddItem(categoryName: widget.title),
             ),
           );
-          // to do: if empty or null, showToast saying to enter again
         },
         child: const Icon(Icons.add, color: Colors.white, size: 28),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: ListView(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Media listings",
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Styling.textColor3,
-                  ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    // Add logic to sort media
-                  },
-                  icon: Icon(Icons.sort),
-                  color: Colors.black,
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            GridView.count(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('Media')
+              .where('CategoryName', isEqualTo: widget.title)
+              .where('UserId', isEqualTo: userId) 
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(child: CircularProgressIndicator());
+            }
+            final mediaDocs = snapshot.data!.docs;
+
+            if (mediaDocs.isEmpty) {
+              return Center(
+                child: Text('Empty'),
+              );
+            }
+
+            return GridView.builder(
               shrinkWrap: true,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 3,
-              children: <Widget>[
-                MediaListCard(
-                  title: 'A Certain Hunger',
-                  imagePath: 'lib/assets/ach.png',
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
+              ),
+              itemCount: mediaDocs.length,
+              itemBuilder: (context, index) {
+                final media = mediaDocs[index];
+                return MediaListCard(
+                  title: media['Name'],
+                  imagePath: media['Image'],
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Details(title: 'A Certain Hunger',)),
+                      MaterialPageRoute(
+                        builder: (context) => Details(title: media['Name']),
+                      ),
                     );
                   },
-                ),
-              ],
-            ),
-          ],
+                );
+              },
+            );
+          },
         ),
       ),
     );
-  }
-
-  Future<String?> addItem(BuildContext context) async {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('New book'),
-        content: TextField(
-          controller: addController,
-          autofocus: true,
-          decoration: InputDecoration(hintText: 'Add book'),
-        ),
-        actions: [
-          TextButton(
-            child: Text('SUBMIT'),
-            onPressed: () {
-              submitMedia(context);
-            },
-          )
-        ],
-      ),
-    );
-    return null;
-  }
-
-  void submitMedia(BuildContext context) {
-    Navigator.of(context).pop(addController.text);
-    addController.clear();
   }
 }
 
@@ -143,8 +130,8 @@ class MediaListCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 80,
-            height: 90,
+            width: 60,
+            height: 75,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.0),
               border: Border.all(
@@ -152,7 +139,7 @@ class MediaListCard extends StatelessWidget {
                 width: 0,
               ),
               image: DecorationImage(
-                image: AssetImage(imagePath),
+                image: FileImage(File(imagePath)),
                 fit: BoxFit.cover,
               ),
             ),

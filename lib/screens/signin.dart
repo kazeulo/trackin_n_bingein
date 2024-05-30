@@ -5,7 +5,6 @@ import 'package:trackin_n_bingein/authentication/user_auth.dart';
 import 'package:trackin_n_bingein/global/common/toast.dart';
 import 'package:trackin_n_bingein/screens/navigation.dart';
 import 'package:trackin_n_bingein/screens/signup.dart';
-import 'package:trackin_n_bingein/screens/homepage.dart';
 
 class Signin extends StatefulWidget {
   const Signin({Key? key}) : super(key: key);

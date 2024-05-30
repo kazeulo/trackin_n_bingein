@@ -3,16 +3,22 @@ import 'dart:io';
 class MediaModel{
   final String? id;
   final String userId;
+  final String categoryName;
   final String name;
   final String author;
   final String description;
-  final int maxDuration;
+  final String status;
+  final double progress;
+  final double maxDuration;
   final File? image;
 
   const MediaModel({
     this.id,
     required this.userId,
+    required this.categoryName,
     required this.name,
+    required this.status,
+    required this.progress,
     required this.author,
     required this.description,
     required this.maxDuration,
@@ -23,6 +29,9 @@ class MediaModel{
     return{
       'Name': name,
       'UserId': userId,
+      'CategoryName': categoryName,
+      'Status': status,
+      'Progress': progress,
       'Author': author,
       'Description': description,
       'Max': maxDuration, 

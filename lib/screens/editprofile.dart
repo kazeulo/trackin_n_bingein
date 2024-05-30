@@ -7,7 +7,6 @@ import 'package:image_picker/image_picker.dart';
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
   
-
   @override
   _EditProfileState createState() => _EditProfileState();
 }
@@ -36,9 +35,7 @@ class _EditProfileState extends State<EditProfile> {
         _profileImage = image;
       });
     }
-  }
-
-
+  } 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,8 +65,8 @@ class _EditProfileState extends State<EditProfile> {
                                  child: Image(
                                     image: _profileImage != null
                                         ? FileImage(File(_profileImage!.path))
-                                        : AssetImage(
-                                                'lib/assets/placeholder_profile.jpg')
+                                        : const AssetImage(
+                                            'lib/assets/placeholder_profile.jpg')
                                             as ImageProvider<Object>,
                                     fit: BoxFit.cover,
                                     width: 120,
@@ -97,7 +94,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                 ],   
               ),
-               Center(
+               const Center(
                  child: Text(
                   "kzlyr@gmail.com",
                   style: TextStyle(
@@ -128,7 +125,7 @@ class _EditProfileState extends State<EditProfile> {
               ),
               // add text change password
               
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(top: 25, right: 25),
                 child: Text(
                   "Change Password",
@@ -215,7 +212,6 @@ class _EditProfileState extends State<EditProfile> {
                   SizedBox(height: 100),
                   Buttons.cancelButton(context),
                   Buttons.saveButton(context),
-
                 ],
               ),
               ],
