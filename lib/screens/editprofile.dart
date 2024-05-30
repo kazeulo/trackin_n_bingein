@@ -52,41 +52,40 @@ class _EditProfileState extends State<EditProfile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Center(
-                child: Column(
-                  children: [
-                    // to be adjusted
-                    // Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: ClipOval(
-                        child: Image.asset(
-                          "lib/assets/placeholder_profile.jpg",
-                          fit: BoxFit.cover,
-                          width: 120,
-                          height: 120,
+              Container(
+                child: Center(
+                  child: Column(
+                    children: [
+                      // to be adjusted
+                      // Spacer(),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: ClipOval(
+                          child: Image.asset(
+                            "lib/assets/placeholder_profile.jpg",
+                            fit: BoxFit.cover,
+                            width: 120,
+                            height: 120,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.only(top:30),
-                  child: Text(
-                    "kzlyr@gmail.com",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Styling.textColor3,
-                      fontWeight: FontWeight.bold,
-                    ),
-
+                    ],
                   ),
                 ),
+                
               ),
+               Center(
+                 child: Text(
+                  "kzlyr@gmail.com",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Styling.textColor3,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+               ),
         
-              SizedBox(height: 20),
+              SizedBox(height: 50),
               // Username Field
               TextFormField(
                 controller: _usernameController,
