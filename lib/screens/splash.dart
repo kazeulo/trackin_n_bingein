@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trackin_n_bingein/buttons/buttons.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
-import 'package:trackin_n_bingein/screens/signin.dart';
 
 class Splash extends StatelessWidget {
   const Splash({super.key});
