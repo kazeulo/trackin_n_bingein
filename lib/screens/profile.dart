@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/authentication/user_auth.dart';
 import 'package:trackin_n_bingein/screens/editprofile.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
-import 'package:trackin_n_bingein/screens/signin.dart';
+import 'package:trackin_n_bingein/screens/splash.dart';
 
 class Profile extends StatelessWidget {
   @override
@@ -67,7 +68,7 @@ class Profile extends StatelessWidget {
                         title: 'Delete Account',
                         icon: Icons.delete,
                         onTap: () {
-                          // implement b-end
+                          showDeleteAccountDialog(context);
                         },
                       ),
                     ],
@@ -101,7 +102,7 @@ class Profile extends StatelessWidget {
                 Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => Signin()),
+                  MaterialPageRoute(builder: (context) => Splash()),
                 );
               },
             ),
@@ -110,6 +111,40 @@ class Profile extends StatelessWidget {
       },
     );
   }
+
+void showDeleteAccountDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Delete Account"),
+        content: Text(
+          "Are you sure you want to delete your account? If you delete your account, you will lose all your data. Continue? "
+        ),
+        actions: [
+          TextButton(
+            child: Text("No"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text("Yes"),
+            onPressed: () async {
+              Navigator.of(context).pop();
+              await FirebaseAuthentication().deleteUserAccount();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Splash()),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
   Widget buildCardWithIcon({
     required String title,
@@ -152,3 +187,4 @@ class Profile extends StatelessWidget {
     );
   }
 }
+
