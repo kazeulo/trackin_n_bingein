@@ -149,7 +149,7 @@ class _SigninState extends State<Signin> {
                       ),
                       child: isSigning
                           ? CircularProgressIndicator(color: Colors.white) // loading indicator
-                          : Text('Sign In'),
+                          : Text('Sign In', style: TextStyle(fontWeight: FontWeight.bold,),),
                       ),
                     ),
                     SizedBox(height: 10),
@@ -230,10 +230,9 @@ class _SigninState extends State<Signin> {
       
     if (user != null) {
       showToast(message: 'Signed in successfully.');
-      var selectedInterests;
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Navigation(selectedInterests: selectedInterests, username: '',)),
+        MaterialPageRoute(builder: (context) => Navigation(username: '',)),
       );
     } else {
       showToast(message: 'Incorrect email or password.');
@@ -257,10 +256,9 @@ class _SigninState extends State<Signin> {
         );
 
         await _firebaseAuth.signInWithCredential(credential);
-        var selectedInterests;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => Navigation(username: 'Kzlyr', selectedInterests: selectedInterests,)),
+          MaterialPageRoute(builder: (context) => Navigation(username: '',)),
         );
       } 
     } catch (e) {
