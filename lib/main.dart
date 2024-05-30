@@ -7,6 +7,7 @@ import 'package:trackin_n_bingein/screens/signup.dart';
 import 'package:trackin_n_bingein/screens/interests.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
 import 'package:trackin_n_bingein/screens/statistics.dart';
+import 'package:trackin_n_bingein/screens/profile.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
