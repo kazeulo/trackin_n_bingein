@@ -1,66 +1,112 @@
 import 'package:flutter/material.dart';
-import 'package:trackin_n_bingein/screens/profile.dart';
-import 'package:trackin_n_bingein/screens/statistics.dart';
-import 'package:trackin_n_bingein/styling/styling.dart';
+import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore
+import 'package:trackin_n_bingein/screens/statistics.dart'; // Import Firestore
 
-// contains widgets and everything in the homepage only
-class Homepage extends StatelessWidget {
-  final String username;
-  const Homepage({Key? key, required this.username}) : super(key: key);
+// Modify Homepage to be a StatefulWidget so it can fetch data asynchronously
+class Homepage extends StatefulWidget {
+  final String email;
+  const Homepage({Key? key, required this.email}) : super(key: key);
+
+  @override
+  _HomepageState createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
+  late Future<String> _usernameFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _usernameFuture = fetchUsername(widget.email);
+  }
+
+  Future<String> fetchUsername(String email) async {
+    try {
+      // Fetch username from Firestore based on email
+      QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance
+          .collection('User')
+          .where('Email', isEqualTo: email)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // Assuming there is only one document with the given email
+        return querySnapshot.docs.first.get('Username');
+      } else {
+        throw Exception('No user found with email: $email');
+      }
+    } catch (e) {
+      print('Error fetching username: $e');
+      throw Exception('Failed to fetch username');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppBar(
-            automaticallyImplyLeading: false,
-            backgroundColor: Color(0xFFA7BCC7),
-            elevation: 0,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return FutureBuilder<String>(
+      future: _usernameFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // While waiting for data to fetch, show a loading indicator
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          // If an error occurs while fetching data, show an error message
+          return Center(child: Text('Error: ${snapshot.error}'));
+        } else {
+          // Once data is fetched, build the UI with the fetched username
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset('lib/assets/logofin.png', height: 50),
-                InkWell(
-                  onTap: () {
-                    Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Profile()),
-                          );
-                  },
-                  child: ClipOval(
-                    child: Image.asset(
-                      "lib/assets/placeholder_profile.jpg",
-                      fit: BoxFit.cover,
-                      width: 40,
-                      height: 40,
-                    ),
+                AppBar(
+                  automaticallyImplyLeading: false,
+                  backgroundColor: Color(0xFFA7BCC7),
+                  elevation: 0,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.asset('lib/assets/logofin.png', height: 50),
+                      InkWell(
+                        onTap: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => Profile()),
+                          // );
+                        },
+                        child: ClipOval(
+                          child: Image.asset(
+                            "lib/assets/placeholder_profile.jpg",
+                            fit: BoxFit.cover,
+                            width: 40,
+                            height: 40,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                GreetingSection(username: snapshot.data!),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      WeeklyWrapUpSection(),
+                      SizedBox(height: 20),
+                      MyListingsSection(),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-          GreetingSection(username: username),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                WeeklyWrapUpSection(),
-                SizedBox(height: 20),
-                MyListingsSection(),
-              ],
-            ),
-          ),
-        ],
-      ),
+          );
+        }
+      },
     );
   }
 }
 
 class GreetingSection extends StatelessWidget {
-  final String username; 
+  final String username;
 
   const GreetingSection({Key? key, required this.username}) : super(key: key);
 
@@ -72,7 +118,7 @@ class GreetingSection extends StatelessWidget {
       height: 100,
       decoration: BoxDecoration(
         color: Color(0xFFA7BCC7),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(25),
           bottomRight: Radius.circular(25),
         ),
@@ -82,9 +128,10 @@ class GreetingSection extends StatelessWidget {
         children: [
           Text(
             'Hi $username!',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+            style: const TextStyle(
+                fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
           ),
-          Text(
+          const Text(
             'Keep track of your media journey with ease.',
             style: TextStyle(fontSize: 16, color: Colors.black),
           ),
@@ -104,9 +151,9 @@ class WeeklyWrapUpSection extends StatelessWidget {  // not finished
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Text(
+            const Text(
               'Weekly Wrap-up',
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text("Here is the summary of the media you've consumed this week."),

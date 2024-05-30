@@ -6,8 +6,6 @@ import 'package:trackin_n_bingein/styling/styling.dart';
 class MediaList extends StatefulWidget {
   final String title;
   const MediaList({Key? key, required this.title}) : super(key: key);
-  
-
 
   @override
   _MediaListState createState() => _MediaListState();

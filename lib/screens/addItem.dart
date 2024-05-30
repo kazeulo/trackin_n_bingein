@@ -97,7 +97,7 @@ class _AddItemState extends State<AddItem> {
                     author: _authorController.text,
                     description: _descriptionController.text,
                     maxDuration: maxDuration,
-                    image: _image);
+                    image: _image, userId: '');
 
                 MediaRepository.instance.createUser(newMedia);
               },
