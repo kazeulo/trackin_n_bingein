@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/screens/details.dart';
 import 'package:trackin_n_bingein/screens/navigation.dart';
 import 'package:trackin_n_bingein/screens/splash.dart';
 import 'package:trackin_n_bingein/screens/signin.dart';
@@ -23,6 +24,7 @@ Future main() async {
       "/": (context) => Splash(),
       '/signin': (context) => Signin(),
       '/signup': (context) => Signup(),
+      '/details': (context) => Details(title: '',),
       // '/interests': (context) => Interests(username: '',), // Placeholder
       '/navigation': (context) => Navigation(email: '',), // Placeholder
       '/homepage': (context) => Homepage(email: '',), // Placeholder

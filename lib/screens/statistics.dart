@@ -1,9 +1,71 @@
-import 'package:flutter/material.dart';  
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 
-class Statistics extends StatelessWidget {
+class MediaConsumptionData {
+  static List<String> categories = []; // Initialize empty list initially
+  static List<double> percentages = [];
+  static List<Color> colors = [
+    Color.fromARGB(255, 122, 195, 255),
+    Color.fromARGB(255, 255, 135, 126),
+    Color.fromRGBO(255, 241, 119, 1),
+    Color.fromARGB(255, 231, 124, 255),
+    Color.fromARGB(255, 191, 255, 175),
+  ];
+}
+
+class Statistics extends StatefulWidget {
   const Statistics({Key? key}) : super(key: key);
+
+  @override
+  State<Statistics> createState() => _StatisticsState();
+  
+}
+
+class _StatisticsState extends State<Statistics> {
+  late String _userId;
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentUserId();
+    fetchCategories();
+  }
+
+  void _getCurrentUserId() {
+  User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      _userId = user.uid;
+    }
+  }
+
+    Future<void> fetchCategories() async {
+    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('Category')
+        .where('UserId', isEqualTo: _userId)
+        .get();
+    
+    final List<DocumentSnapshot> documents = querySnapshot.docs;
+    
+    final List<String> names = [];
+    final List<double> percentages = [];
+    
+    documents.forEach((doc) {
+      final name = doc['Name'];
+      final percentage = doc['OverallStat']; 
+      if (name != null) {
+        names.add(name);
+        percentages.add(percentage);
+      }
+    });
+    
+    setState(() {
+      MediaConsumptionData.categories = names;
+      MediaConsumptionData.percentages = percentages;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,35 +183,28 @@ class Statistics extends StatelessWidget {
   }
 
   List<Widget> generateLegends() {
-    return [
-      LegendItem(label: "Books", color: Color.fromARGB(255, 122, 195, 255)),
-      LegendItem(label: "Movies", color: Color.fromARGB(255, 255, 135, 126)),
-      LegendItem(label: "Podcasts", color: Color.fromRGBO(255, 241, 119, 1)),
-      LegendItem(label: "Games", color: Color.fromARGB(255, 231, 124, 255)),
-      LegendItem(label: "Social Media", color: Color.fromARGB(255, 191, 255, 175)),
-    ];
+    List<Widget> legends = [];
+    for (int i = 0; i < MediaConsumptionData.categories.length; i++) {
+      legends.add(
+        LegendItem(
+          label: MediaConsumptionData.categories[i],
+          color: MediaConsumptionData.colors[i],
+        ),
+      );
+    }
+    return legends;
   }
 
   List<Widget> generateLinearIndicators() {
-    final List<String> categories = ["Books", "Movies", "Podcasts", "Games", "Social Media"];
-    final List<double> percentages = [25, 19, 3, 45, 10];
-    final List<Color> colors = [
-      Color.fromARGB(255, 122, 195, 255),
-      Color.fromARGB(255, 255, 135, 126),
-      Color.fromRGBO(255, 241, 119, 1),
-      Color.fromARGB(255, 231, 124, 255),
-      Color.fromARGB(255, 191, 255, 175),
-    ];
-
     List<Widget> indicators = [];
-    for (int i = 0; i < categories.length; i++) {
+    for (int i = 0; i < MediaConsumptionData.categories.length; i++) {
       indicators.add(
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
             children: [
               Text(
-                categories[i],
+                MediaConsumptionData.categories[i],
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),
@@ -164,16 +219,16 @@ class Statistics extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: LinearProgressIndicator(
-                      value: percentages[i] / 100,
+                      value: MediaConsumptionData.percentages[i] / 100,
                       backgroundColor: Colors.transparent,
-                      valueColor: AlwaysStoppedAnimation<Color>(colors[i]),
+                      valueColor: AlwaysStoppedAnimation<Color>(MediaConsumptionData.colors[i]),
                       minHeight: 8,
                     ),
                   ),
                 ),
               ),
               SizedBox(width: 10),
-              Text('${percentages[i].toStringAsFixed(0)}%'),
+              Text('${MediaConsumptionData.percentages[i].toStringAsFixed(0)}%'),
             ],
           ),
         ),
@@ -225,28 +280,13 @@ class PieChartWidget extends StatelessWidget {
       height: 200,
       child: PieChart(
         PieChartData(
-          sections: [
-            PieChartSectionData(
-              value: 25,
-              color: const Color.fromARGB(255, 122, 195, 255),
+          sections: List.generate(
+            MediaConsumptionData.categories.length,
+            (index) => PieChartSectionData(
+              value: MediaConsumptionData.percentages[index],
+              color: MediaConsumptionData.colors[index],
             ),
-            PieChartSectionData(
-              value: 19,
-              color: const Color.fromARGB(255, 255, 135, 126),
-            ),
-            PieChartSectionData(
-              value: 3,
-              color: Color.fromRGBO(255, 241, 119, 1),
-            ),
-            PieChartSectionData(
-              value: 45,
-              color: Color.fromARGB(255, 231, 124, 255),
-            ),
-            PieChartSectionData(
-              value: 10,
-              color: Color.fromARGB(255, 191, 255, 175),
-            ),
-          ],
+          ),
         ),
       ),
     );

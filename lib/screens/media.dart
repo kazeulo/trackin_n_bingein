@@ -289,12 +289,14 @@ class _MediaState extends State<Media> {
   // submit button for adding a media
   Future<void> submitMedia(BuildContext context) async {
     final mediaName = addController.text;
+    int overallStat = 0;
 
     try {
       // Create a new instance of CategoryModel
       final newCategory = CategoryModel(
         userId: userId,
         name: mediaName,
+        overallStat: overallStat,
       );
 
       // Convert CategoryModel to JSON and add to Firestore

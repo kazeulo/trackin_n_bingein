@@ -7,6 +7,8 @@ class MediaModel{
   final String name;
   final String author;
   final String description;
+  final String status;
+  final int progress;
   final int maxDuration;
   final File? image;
 
@@ -15,6 +17,8 @@ class MediaModel{
     required this.userId,
     required this.categoryName,
     required this.name,
+    required this.status,
+    required this.progress,
     required this.author,
     required this.description,
     required this.maxDuration,
@@ -26,6 +30,8 @@ class MediaModel{
       'Name': name,
       'UserId': userId,
       'CategoryName': categoryName,
+      'Status': status,
+      'Progress': progress,
       'Author': author,
       'Description': description,
       'Max': maxDuration, 

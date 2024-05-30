@@ -135,7 +135,7 @@ class _AddItemState extends State<AddItem> {
                     } else if (descriptionWordCount > maxDescriptionWordCount) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Description exceeds word limit'),
+                          content: const Text('Description exceeds word limit'),
                         ),
                       );
                       return "error";
@@ -178,6 +178,8 @@ class _AddItemState extends State<AddItem> {
                   onPressed: () async {
                     // Convert max duration to integer
                     int maxDuration = 0;
+                    String status = 'Ongoing';
+                    int progress = 0;
                     try {
                       maxDuration = int.parse(_maxDurationController.text);
                     } catch (e) {
@@ -189,6 +191,8 @@ class _AddItemState extends State<AddItem> {
                       userId: _userId,
                       categoryName: widget.categoryName, 
                       name: _nameController.text,
+                      progress: progress, 
+                      status: status, 
                       author: _authorController.text,
                       description: description,
                       maxDuration: maxDuration,
@@ -198,7 +202,7 @@ class _AddItemState extends State<AddItem> {
                     await FirebaseFirestore.instance.collection('Media').add(newMedia.toJson());
                     
                     Navigator.of(context).pop();
-                    
+
                     // Clear all input fields
                     _nameController.clear();
                     _authorController.clear();
