@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/screens/profile.dart';
 import 'package:trackin_n_bingein/screens/statistics.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 

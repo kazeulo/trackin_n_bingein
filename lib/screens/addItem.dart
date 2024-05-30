@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:trackin_n_bingein/backend/media_repository.dart';
@@ -15,8 +16,7 @@ class _AddItemState extends State<AddItem> {
   final Mediarepo = Get.put(MediaRepository());
 
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _categoryController = TextEditingController();
-  final TextEditingController _statusController = TextEditingController();
+  final TextEditingController _authorController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _maxDurationController = TextEditingController();
   File? _image;
@@ -61,17 +61,21 @@ class _AddItemState extends State<AddItem> {
               decoration: InputDecoration(labelText: 'Name'),
             ),
             TextFormField(
-              controller: _categoryController,
-              decoration: InputDecoration(labelText: 'Category'),
-            ),
-            TextFormField(
-              controller: _statusController,
-              decoration: InputDecoration(labelText: 'Status'),
+              controller: _authorController,
+              decoration: InputDecoration(labelText: 'Author or Creator'),
             ),
             TextFormField(
               controller: _descriptionController,
-              decoration: InputDecoration(labelText: 'Description'),
+              decoration: InputDecoration(labelText: 'Description',
+              counterText: ''),
+              inputFormatters: [
+                LengthLimitingTextInputFormatter(
+                  200,
+                ), //n is maximum number of characters you want in textfield
+              ],
+              
             ),
+            
             TextFormField(
               controller: _maxDurationController,
               decoration: InputDecoration(labelText: 'Max Duration'),
@@ -90,8 +94,7 @@ class _AddItemState extends State<AddItem> {
                 // Create media model with user inputs
                 MediaModel newMedia = MediaModel(
                     name: _nameController.text,
-                    category: _categoryController.text,
-                    status: _statusController.text,
+                    author: _authorController.text,
                     description: _descriptionController.text,
                     maxDuration: maxDuration,
                     image: _image);
