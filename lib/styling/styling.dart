@@ -11,6 +11,9 @@ class ButtonStyling {
   static const Color primaryColor = Color(0xFFFFFFFF);
   static const Color buttonColor = Color(0xFFFFFFFF);
   static const Color buttonTextColor =  Color(0xFF11565D);
+  static const Color buttonColor1 = Color(0xFFAECDD0); 
+  static const Color buttonColor2 = Color.fromARGB(255, 207, 174, 208);
+
 
 }
 
