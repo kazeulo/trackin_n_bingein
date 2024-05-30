@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:trackin_n_bingein/screens/navigation.dart';
@@ -23,8 +24,8 @@ Future main() async {
       '/signin': (context) => Signin(),
       '/signup': (context) => Signup(),
       // '/interests': (context) => Interests(username: '',), // Placeholder
-      '/navigation': (context) => Navigation(username: '',), // Placeholder
-      '/homepage': (context) => Homepage(username: '',), // Placeholder
+      '/navigation': (context) => Navigation(email: '',), // Placeholder
+      '/homepage': (context) => Homepage(email: '',), // Placeholder
       '/statistic': (context) => Statistics(),
       // '/media': (context) => Media(),
     },
