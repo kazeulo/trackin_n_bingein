@@ -5,8 +5,8 @@ import 'package:trackin_n_bingein/authentication/user_auth.dart';
 import 'package:trackin_n_bingein/backend/models/userModel.dart';
 import 'package:trackin_n_bingein/backend/user_repository.dart';
 import 'package:trackin_n_bingein/global/common/toast.dart';
-import 'package:trackin_n_bingein/screens/interests.dart';
 import 'package:trackin_n_bingein/screens/signin.dart';
+import 'package:trackin_n_bingein/screens/navigation.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -198,7 +198,7 @@ class _SignupState extends State<Signup> {
                         },
                       ),
                       SizedBox(height: 10),
-                      // Sign In Button
+                      // Sign Up Button
                       SizedBox(
                         width: double.infinity,
                         height: 50,
@@ -216,7 +216,12 @@ class _SignupState extends State<Signup> {
                           ),
                           child: isSigning
                               ? CircularProgressIndicator(color: Colors.white)
-                              : Text('Sign Up'),
+                              : Text(
+                                  'Sign Up',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
                       ),
                       SizedBox(height: 10),
@@ -308,7 +313,7 @@ class _SignupState extends State<Signup> {
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Interests(username: username)),
+        MaterialPageRoute(builder: (context) => Navigation(username: username)),
       );
     } else {
       showToast(message: 'Email already exists.');
