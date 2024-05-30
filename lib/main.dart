@@ -4,7 +4,7 @@ import 'package:trackin_n_bingein/screens/navigation.dart';
 import 'package:trackin_n_bingein/screens/splash.dart';
 import 'package:trackin_n_bingein/screens/signin.dart';
 import 'package:trackin_n_bingein/screens/signup.dart';
-import 'package:trackin_n_bingein/screens/interests.dart';
+// import 'package:trackin_n_bingein/screens/interests.dart';
 import 'package:trackin_n_bingein/screens/homepage.dart';
 import 'package:trackin_n_bingein/screens/statistics.dart';
 import 'package:trackin_n_bingein/screens/profile.dart';
@@ -22,9 +22,9 @@ Future main() async {
       "/": (context) => Splash(),
       '/signin': (context) => Signin(),
       '/signup': (context) => Signup(),
-      '/interests': (context) => Interests(username: '',), // Placeholder
-      '/navigation': (context) => Navigation(selectedInterests: [], username: '',), // Placeholder
-      '/homepage': (context) => Homepage(selectedInterests: [], username: '',), // Placeholder
+      // '/interests': (context) => Interests(username: '',), // Placeholder
+      '/navigation': (context) => Navigation(username: '',), // Placeholder
+      '/homepage': (context) => Homepage(username: '',), // Placeholder
       '/statistic': (context) => Statistics(),
       // '/media': (context) => Media(),
     },

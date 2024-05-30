@@ -9,9 +9,8 @@ import 'package:trackin_n_bingein/screens/media.dart';
 // separate file for centralization purposes
 class Navigation extends StatefulWidget {
   final String username;
-  final List<String>? selectedInterests;
 
-  const Navigation({super.key, required this.username, required this.selectedInterests});
+  const Navigation({Key? key, required this.username}) : super(key: key);
 
   @override
   _NavigationState createState() => _NavigationState();
@@ -21,7 +20,7 @@ class _NavigationState extends State<Navigation> {
   int _currentIndex = 0;
 
   final List<Widget> _tabs = [
-    Homepage(selectedInterests: [], username: '',),
+    Homepage(username: '',),
     Statistics(),
     Media(),
     Profile(),
