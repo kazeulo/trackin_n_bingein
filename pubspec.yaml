@@ -44,6 +44,9 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   fluttertoast: ^8.2.5
   google_sign_in: ^6.2.1
+  firebase_database: ^10.5.7
+  get: ^4.6.6
+  image_picker: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +76,16 @@ flutter:
     - lib/assets/splash.png
     - lib/assets/logofin.png
     - lib/assets/placeholder_profile.jpg
+    - lib/assets/books.png
+    - lib/assets/music.png
+    - lib/assets/ach.png
+    - lib/assets/banner.png
+    - lib/assets/banner1.png
+    - lib/assets/books.jpg
+    - lib/assets/movie.jpg
+ 
+    
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
