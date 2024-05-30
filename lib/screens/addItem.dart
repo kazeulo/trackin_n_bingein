@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:trackin_n_bingein/backend/media_repository.dart';
-import 'package:trackin_n_bingein/backend/models/MediaModel';
+import 'package:trackin_n_bingein/backend/models/mediaModel';
 
 class AddItem extends StatefulWidget {
   @override
