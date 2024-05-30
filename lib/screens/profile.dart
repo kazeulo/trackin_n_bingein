@@ -9,17 +9,26 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Settings"),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 80), 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              "Customize your profile",
+              "Settings",
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+              textAlign: TextAlign.left,
+            ),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(
+              "Customize your page",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.normal,
@@ -60,7 +69,6 @@ class Profile extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(height: 40),
           Expanded(
             child: Center(
               child: Column(
@@ -72,7 +80,7 @@ class Profile extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const EditProfile()),
+                        MaterialPageRoute(builder: (context) => EditProfile()),
                       );
                     },
                   ),
@@ -106,17 +114,17 @@ class Profile extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Confirm Logout"),
-          content: const Text("Are you sure you want to log out?"),
+          title: Text("Confirm Logout"),
+          content: Text("Are you sure you want to log out?"),
           actions: [
             TextButton(
-              child: const Text("No"),
+              child: Text("No"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text("Yes"),
+              child: Text("Yes"),
               onPressed: () {
                 FirebaseAuth.instance.signOut();
                 Navigator.pushReplacement(
@@ -136,19 +144,19 @@ class Profile extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Delete Account"),
-          content: const Text(
-            "Are you sure you want to delete your account? If you delete your account, you will lose all your data. Continue? "
+          title: Text("Delete Account"),
+          content: Text(
+            "Are you sure you want to delete your account? If you delete your account, you will lose all your data. Continue?"
           ),
           actions: [
             TextButton(
-              child: const Text("No"),
+              child: Text("No"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: const Text("Yes"),
+              child: Text("Yes"),
               onPressed: () async {
                 await FirebaseAuthentication().deleteUserAccount();
                 Navigator.pushReplacement(
@@ -170,7 +178,7 @@ class Profile extends StatelessWidget {
     bool isDarker = false,
     Color? cardColor,
   }) {
-    cardColor ??= isDarker ? Styling.textColor1 : const Color.fromARGB(255, 197, 219, 221);
+    cardColor ??= isDarker ? Styling.textColor1 : Color.fromARGB(255, 197, 219, 221);
 
     return Card(
       color: cardColor,
@@ -186,7 +194,7 @@ class Profile extends StatelessWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.start,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     color: Styling.textColor3,

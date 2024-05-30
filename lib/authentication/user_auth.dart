@@ -43,8 +43,7 @@ class FirebaseAuthentication {
     return null;
   }
 
-  //delete account
-
+//delete account
 Future<void> deleteUserAccount() async {
   try {
     await _auth.currentUser!.delete();
