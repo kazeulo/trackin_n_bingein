@@ -78,8 +78,68 @@ class Profile extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-          ),
+              Text(
+                "Name: Kzlyr",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: Styling.textColor3,
+                ),
+              ),
+                Text(
+                "Email: kzlyr@gmail.com",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal,
+                  color: Styling.textColor3,
+                ),
+              ),
+            
+              SizedBox(height: 10),
+              Padding(
+                padding: EdgeInsets.only(top: 40),
+                child: Container(
+                  child: Expanded(
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          buildCardWithIcon(
+                            title: 'Edit Profile',
+                            icon: Icons.person,
+                            // implement b-end
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const EditProfile()),
+                              );
+                            },
+                          ),
+                          SizedBox(height: 10),
+                          buildCardWithIcon(
+                            title: 'Log Out',
+                            icon: Icons.logout,
+                            onTap: () {
+                              // implement b-end
+                              // no backend yet
+                            },
+                          ),
+                          SizedBox(height: 10),
+                          buildCardWithIcon(
+                            title: 'Delete Account',
+                            icon: Icons.delete,
+                            onTap: () {
+                              // implement b-end
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+),
         ],
       ),
     );
