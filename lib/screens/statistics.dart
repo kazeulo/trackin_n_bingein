@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';  
 import 'package:fl_chart/fl_chart.dart';
+import 'package:trackin_n_bingein/styling/styling.dart';
 
 class Statistics extends StatelessWidget {
-  const Statistics({Key? key});
+  const Statistics({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,14 +27,14 @@ class Statistics extends StatelessWidget {
                     ),
                     SizedBox(width: 10),
                     RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                         children: [
                           TextSpan(
                             text: "Kzlyr",
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                              color: Styling.textColor3,
                             ),
                           ),
                           TextSpan(
@@ -41,7 +42,7 @@ class Statistics extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.normal,
-                              color: Colors.black,
+                              color: Styling.textColor3,
                             ),
                           ),
                         ],
@@ -59,7 +60,7 @@ class Statistics extends StatelessWidget {
                         fit: BoxFit.fill,
                       ),
                       Padding(
-                        padding: EdgeInsets.only(top: 25, right: 25),
+                        padding: const EdgeInsets.only(top: 25, right: 25),
                         child: Text(
                           "Statistics",
                           style: TextStyle(
@@ -77,17 +78,36 @@ class Statistics extends StatelessWidget {
                   elevation: 4,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          flex: 2,
-                          child: PieChartWidget(),
+                        SizedBox(height: 10),
+                        Center(
+                          child: Text(
+                            "Here is the summary of the media you've consumed this week.",
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                        SizedBox(width: 20),
-                        Column(
+                        SizedBox(height: 20),
+                        Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: generateLegends(),
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: PieChartWidget(),
+                            ),
+                            SizedBox(width: 20),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: generateLegends(),
+                            ),
+                          ],
                         ),
+                        SizedBox(height: 20),
+                        ...generateLinearIndicators(),
                       ],
                     ),
                   ),
@@ -102,24 +122,75 @@ class Statistics extends StatelessWidget {
 
   List<Widget> generateLegends() {
     return [
-      LegendItem(label: "Books", color: Color.fromARGB(255, 122, 195, 255), value: 25),
-      LegendItem(label: "Movies", color: Color.fromARGB(255, 255, 135, 126), value: 19),
-      LegendItem(label: "Podcasts", color: Color.fromRGBO(255, 241, 119, 1), value: 3),
-      LegendItem(label: "Games", color: Color.fromARGB(255, 231, 124, 255), value: 45),
-      LegendItem(label: "Social Media", color: Color.fromARGB(255, 191, 255, 175), value: 10),
+      LegendItem(label: "Books", color: Color.fromARGB(255, 122, 195, 255)),
+      LegendItem(label: "Movies", color: Color.fromARGB(255, 255, 135, 126)),
+      LegendItem(label: "Podcasts", color: Color.fromRGBO(255, 241, 119, 1)),
+      LegendItem(label: "Games", color: Color.fromARGB(255, 231, 124, 255)),
+      LegendItem(label: "Social Media", color: Color.fromARGB(255, 191, 255, 175)),
     ];
+  }
+
+  List<Widget> generateLinearIndicators() {
+    final List<String> categories = ["Books", "Movies", "Podcasts", "Games", "Social Media"];
+    final List<double> percentages = [25, 19, 3, 45, 10];
+    final List<Color> colors = [
+      Color.fromARGB(255, 122, 195, 255),
+      Color.fromARGB(255, 255, 135, 126),
+      Color.fromRGBO(255, 241, 119, 1),
+      Color.fromARGB(255, 231, 124, 255),
+      Color.fromARGB(255, 191, 255, 175),
+    ];
+
+    List<Widget> indicators = [];
+    for (int i = 0; i < categories.length; i++) {
+      indicators.add(
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Row(
+            children: [
+              Text(
+                categories[i],
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.grey[300],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(5),
+                    child: LinearProgressIndicator(
+                      value: percentages[i] / 100,
+                      backgroundColor: Colors.transparent,
+                      valueColor: AlwaysStoppedAnimation<Color>(colors[i]),
+                      minHeight: 8,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(width: 10),
+              Text('${percentages[i].toStringAsFixed(0)}%'),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return indicators;
   }
 }
 
 class LegendItem extends StatelessWidget {
   final String label;
   final Color color;
-  final double value;
 
   const LegendItem({
     required this.label,
     required this.color,
-    required this.value,
   });
 
   @override
