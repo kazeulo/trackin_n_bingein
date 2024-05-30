@@ -3,7 +3,7 @@ import 'package:trackin_n_bingein/buttons/buttons.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 
 class Splash extends StatelessWidget {
-  const Splash({Key? key}) : super(key: key);
+  const Splash({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +33,10 @@ class Splash extends StatelessWidget {
                 ),
               ),
             ),
-            Align(
+            const Align(
               alignment: Alignment.topCenter,
               child: Padding(
-                padding: const EdgeInsets.only(top: 250.0),
+                padding: EdgeInsets.only(top: 250.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/authentication/user_auth.dart';
 import 'package:trackin_n_bingein/screens/editprofile.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
-import 'package:trackin_n_bingein/screens/signin.dart';
+import 'package:trackin_n_bingein/screens/splash.dart';
 
 class Profile extends StatelessWidget {
+  const Profile({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 100), 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+          const SizedBox(height: 100), 
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
               // should be changed to appbar 
               "Settings",
@@ -25,7 +28,7 @@ class Profile extends StatelessWidget {
             ),
             
           ),
-          Text(
+          const Text(
             "Customize your page",
             style: TextStyle(
               fontSize: 18,
@@ -35,9 +38,9 @@ class Profile extends StatelessWidget {
             textAlign: TextAlign.left,
           ),
 
-          SizedBox(height: 10), 
+          const SizedBox(height: 10), 
           Padding(
-            padding: EdgeInsets.only(top: 90),
+            padding: const EdgeInsets.only(top: 90),
             child: Container(
               child: Expanded(
                 child: Center(
@@ -54,7 +57,7 @@ class Profile extends StatelessWidget {
                           );
                         },
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       buildCardWithIcon(
                         title: 'Log Out',
                         icon: Icons.logout,
@@ -62,12 +65,12 @@ class Profile extends StatelessWidget {
                           showLogoutConfirmationDialog(context);
                         },
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       buildCardWithIcon(
                         title: 'Delete Account',
                         icon: Icons.delete,
                         onTap: () {
-                          // implement b-end
+                          showDeleteAccountDialog(context);
                         },
                       ),
                     ],
@@ -86,22 +89,22 @@ class Profile extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Confirm Logout"),
-          content: Text("Are you sure you want to log out?"),
+          title: const Text("Confirm Logout"),
+          content: const Text("Are you sure you want to log out?"),
           actions: [
             TextButton(
-              child: Text("No"),
+              child: const Text("No"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("Yes"),
+              child: const Text("Yes"),
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => Signin()),
+                  MaterialPageRoute(builder: (context) => const Splash()),
                 );
               },
             ),
@@ -111,6 +114,40 @@ class Profile extends StatelessWidget {
     );
   }
 
+void showDeleteAccountDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text("Delete Account"),
+        content: const Text(
+          "Are you sure you want to delete your account? If you delete your account, you will lose all your data. Continue? "
+        ),
+        actions: [
+          TextButton(
+            child: const Text("No"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text("Yes"),
+            onPressed: () async {
+              Navigator.of(context).pop();
+              await FirebaseAuthentication().deleteUserAccount();
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const Splash()),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
   Widget buildCardWithIcon({
     required String title,
     required IconData icon,
@@ -119,7 +156,7 @@ class Profile extends StatelessWidget {
     Color? cardColor,
   }) {
     // for color wanted to implement delete to be a shade darker
-    cardColor ??= isDarker ? Styling.textColor1 : Color.fromARGB(255, 197, 219, 221);
+    cardColor ??= isDarker ? Styling.textColor1 : const Color.fromARGB(255, 197, 219, 221);
 
     return Card(
       color: cardColor,
@@ -136,7 +173,7 @@ class Profile extends StatelessWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.start,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     color: Styling.textColor3,
@@ -152,3 +189,4 @@ class Profile extends StatelessWidget {
     );
   }
 }
+
