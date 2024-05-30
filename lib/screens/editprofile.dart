@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:trackin_n_bingein/buttons/buttons.dart';
+import 'package:trackin_n_bingein/styling/styling.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
+  
 
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -9,7 +14,9 @@ class EditProfile extends StatefulWidget {
 
 class _EditProfileState extends State<EditProfile> {
   final _formKey = GlobalKey<FormState>();
+  late XFile? _profileImage = XFile('lib/assets/placeholder_profile.jpg');
   bool isSigning = false;
+
 
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -20,6 +27,18 @@ class _EditProfileState extends State<EditProfile> {
   bool _isPasswordVisible = false;
   bool _isConfirmPasswordVisible = false;
 
+  Future<void> showImagePickerOption(BuildContext context) async {
+    final picker = ImagePicker();
+    final image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      setState(() {
+        print('Setting profile image: ${image.path}');
+        _profileImage = image;
+      });
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +48,7 @@ class _EditProfileState extends State<EditProfile> {
       body: Form(
         key: _formKey,
         child: SingleChildScrollView(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -37,41 +56,36 @@ class _EditProfileState extends State<EditProfile> {
                 child: Column(
                   children: [
                     // to be adjusted
-                    ClipOval(
-                      child: Image.asset(
-                        "lib/assets/placeholder_profile.jpg",
-                        fit: BoxFit.cover,
-                        width: 100,
-                        height: 100,
+                    // Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: ClipOval(
+                        child: Image.asset(
+                          "lib/assets/placeholder_profile.jpg",
+                          fit: BoxFit.cover,
+                          width: 120,
+                          height: 120,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-               SizedBox(height: 16),
-              // Email Field - email should be static cant be changed 
-              TextFormField(
-                controller: _emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(top:30),
+                  child: Text(
+                    "kzlyr@gmail.com",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Styling.textColor3,
+                      fontWeight: FontWeight.bold,
+                    ),
+
                   ),
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  String pattern = r'^[^@]+@[^@]+\.[^@]+';
-                  RegExp regex = RegExp(pattern);
-                  if (!regex.hasMatch(value)) {
-                    return 'Please enter a valid email';
-                  }
-                  // Add email existence check logic here
-                  return null;
-                },
               ),
+        
               SizedBox(height: 20),
               // Username Field
               TextFormField(
@@ -90,7 +104,21 @@ class _EditProfileState extends State<EditProfile> {
                   return null;
                 },
               ),
-             
+              // add text change password
+              
+              Padding(
+                padding: EdgeInsets.only(top: 25, right: 25),
+                child: Text(
+                  "Change Password",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Styling.textColor3,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+
               SizedBox(height: 16),
               // Password Field
               TextFormField(
@@ -159,18 +187,16 @@ class _EditProfileState extends State<EditProfile> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  
-                  if (_formKey.currentState!.validate()) {
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  SizedBox(height: 100),
+                  Buttons.cancelButton(context),
+                  Buttons.saveButton(context),
 
-                  }
-                },
-                // should be save changes and cancel buttons
-                child: Text('Submit'),
+                ],
               ),
-            ],
+              ],
           ),
         ),
       ),

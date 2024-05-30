@@ -74,12 +74,12 @@ class Buttons {
   // cancel
   static Widget cancelButton(BuildContext context) {
     return ElevatedButton(
-      child: const Text('Mark as finished'),
+      child: const Text('Cancel'),
       style: ElevatedButton.styleFrom(
-        foregroundColor: ButtonStyling.primaryColor,
-        backgroundColor: ButtonStyling.buttonTextColor,
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        textStyle: TextStyle(fontSize: 18),
+        foregroundColor: ButtonStyling.buttonTextColor,
+        backgroundColor: ButtonStyling.buttonColor1,
+        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+        textStyle: TextStyle(fontSize: 20),
         elevation: 3,
       ),
       onPressed: () {
@@ -98,12 +98,12 @@ class Buttons {
   //savebutton
   static Widget saveButton(BuildContext context) {
     return ElevatedButton(
-      child: const Text('Mark as finished'),
+      child: const Text('Save'),
       style: ElevatedButton.styleFrom(
         foregroundColor: ButtonStyling.primaryColor,
         backgroundColor: ButtonStyling.buttonTextColor,
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        textStyle: TextStyle(fontSize: 18),
+        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+        textStyle: TextStyle(fontSize: 20),
         elevation: 3,
       ),
       onPressed: () {
