@@ -24,14 +24,10 @@ class Homepage extends StatelessWidget {
                 Image.asset('lib/assets/logofin.png', height: 50),
                 InkWell(
                   onTap: () {
-
                     Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => Profile()),
                           );
-
-                    // to add: direct to the profile page
-
                   },
                   child: ClipOval(
                     child: Image.asset(

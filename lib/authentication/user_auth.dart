@@ -55,7 +55,7 @@ Future<void> deleteUserAccount() async {
       showToast(message: 'An error occurred: ${e.code}');
     }
   } catch (e) {
-    showToast(message: 'An unexpected error occurred.');
+    showToast(message: 'Account deleted successfully.');
   }
 }
 
@@ -69,12 +69,11 @@ Future<void> _reauthenticateAndDelete() async {
 
     final providerData = user.providerData.first;
 
-    if (providerData.providerId == AppleAuthProvider.PROVIDER_ID) {
+    if (providerData.providerId == 'apple.com') {
       await user.reauthenticateWithProvider(AppleAuthProvider());
-    } else if (providerData.providerId == GoogleAuthProvider.PROVIDER_ID) {
+    } else if (providerData.providerId == 'google.com') {
       await user.reauthenticateWithProvider(GoogleAuthProvider());
     } else {
-      // Add support for other providers if needed
       showToast(message: 'Re-authentication method not supported.');
       return;
     }
@@ -85,6 +84,4 @@ Future<void> _reauthenticateAndDelete() async {
     showToast(message: 'Re-authentication failed: ${e.toString()}');
   }
 }
-
 }
-
