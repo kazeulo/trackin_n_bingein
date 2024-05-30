@@ -52,27 +52,50 @@ class _EditProfileState extends State<EditProfile> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                child: Center(
-                  child: Column(
-                    children: [
-                      // to be adjusted
-                      // Spacer(),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: ClipOval(
-                          child: Image.asset(
-                            "lib/assets/placeholder_profile.jpg",
-                            fit: BoxFit.cover,
-                            width: 120,
-                            height: 120,
-                          ),
-                        ),
-                      ),
-                    ],
+              Stack(
+                children: [
+                  Center(
+                    child: Column(
+                      children: [
+                        // to be adjusted
+                        // Spacer(),
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Stack(
+                              children: [
+                              ClipOval(  
+                                 child: Image(
+                                    image: _profileImage != null
+                                        ? FileImage(File(_profileImage!.path))
+                                        : AssetImage(
+                                                'lib/assets/placeholder_profile.jpg')
+                                            as ImageProvider<Object>,
+                                    fit: BoxFit.cover,
+                                    width: 120,
+                                    height: 120,
+                                  ),
+                              ),
+                                // SizedBox(height: 20),
+                                Positioned(
+                                    bottom: -3,
+                                    left: 70,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        showImagePickerOption(context);
+                                      },
+                                      icon: const Icon(Icons.add_a_photo,
+                                      color:Styling.textColor3),
+                                    ),
+                                  )
+                              ]
+                              )
+                            ),
+                          ),   
+                      ],
+                    ),
                   ),
-                ),
-                
+                ],   
               ),
                Center(
                  child: Text(
