@@ -13,6 +13,8 @@ class MediaConsumptionData {
     Color.fromRGBO(255, 241, 119, 1),
     Color.fromARGB(255, 231, 124, 255),
     Color.fromARGB(255, 191, 255, 175),
+    Color.fromARGB(255, 172, 167, 198),
+    Color.fromARGB(255, 184, 175, 255),
   ];
 }
 
@@ -34,18 +36,18 @@ class _StatisticsState extends State<Statistics> {
     fetchCategories();
   }
 
-  void _getCurrentUserId() {
+void _getCurrentUserId() {
   User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      _userId = user.uid;
-    }
+  if (user != null) {
+    _userId = user.uid;
   }
+}
 
-    Future<void> fetchCategories() async {
-    final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-        .collection('Category')
-        .where('UserId', isEqualTo: _userId)
-        .get();
+Future<void> fetchCategories() async {
+  final QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+      .collection('Category')
+      .where('UserId', isEqualTo: _userId)
+      .get();
     
     final List<DocumentSnapshot> documents = querySnapshot.docs;
     
@@ -54,7 +56,7 @@ class _StatisticsState extends State<Statistics> {
     
     documents.forEach((doc) {
       final name = doc['Name'];
-      final percentage = doc['OverallStat']; 
+      final percentage = doc['OverallStat'] as double? ?? 0.0; 
       if (name != null) {
         names.add(name);
         percentages.add(percentage);

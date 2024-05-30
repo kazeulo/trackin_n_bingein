@@ -3,10 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:trackin_n_bingein/backend/media_repository.dart';
 import 'package:trackin_n_bingein/backend/models/mediaModel';
 import 'package:trackin_n_bingein/buttons/buttons.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
@@ -177,11 +174,11 @@ class _AddItemState extends State<AddItem> {
                 ElevatedButton(
                   onPressed: () async {
                     // Convert max duration to integer
-                    int maxDuration = 0;
+                    double maxDuration = 0;
                     String status = 'Ongoing';
-                    int progress = 0;
+                    double progress = 0;
                     try {
-                      maxDuration = int.parse(_maxDurationController.text);
+                      maxDuration = double.parse(_maxDurationController.text);
                     } catch (e) {
                       print('Error parsing max duration: $e');
                     }

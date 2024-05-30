@@ -124,8 +124,7 @@ class GreetingSection extends StatelessWidget {
   }
 }
 
-class WeeklyWrapUpSection extends StatelessWidget { 
-  
+class WeeklyWrapUpSection extends StatelessWidget {  // not finished
   @override 
   Widget build(BuildContext context) {
     return Card(
@@ -149,12 +148,7 @@ class WeeklyWrapUpSection extends StatelessWidget {
             ),
             SizedBox(height: 10),
             ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Statistics()),
-                );
-              },
+              onPressed: () {},
               child: Text('View my statistics'),
             ),
           ],

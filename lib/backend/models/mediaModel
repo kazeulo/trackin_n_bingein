@@ -8,8 +8,8 @@ class MediaModel{
   final String author;
   final String description;
   final String status;
-  final int progress;
-  final int maxDuration;
+  final double progress;
+  final double maxDuration;
   final File? image;
 
   const MediaModel({

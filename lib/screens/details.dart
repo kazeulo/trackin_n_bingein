@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -11,8 +12,9 @@ class Details extends StatefulWidget {
 }
 
 class _DetailsState extends State<Details> {
-  late int progressToAdd;
-  late int progress; // Declare progress here
+  late double progressToAdd;
+  late double progress; 
+  late String catName;
   
   final TextEditingController _controller = TextEditingController();
 
@@ -20,7 +22,7 @@ class _DetailsState extends State<Details> {
   void initState() {
     super.initState();
     progressToAdd = 0;
-    progress = 0; // Initialize progress here
+    progress = 0; 
   }
 
   @override
@@ -48,14 +50,22 @@ class _DetailsState extends State<Details> {
           final String description = mediaData['Description'];
           final String status = mediaData['Status'];
           progress = mediaData['Progress']; // Assign value to progress
-          final int max = mediaData['Max'];
+          final double max = mediaData['Max'];
           final String imagePath = mediaData['Image'];
           final String categoryName = mediaData['CategoryName'];
+          catName = mediaData['CategoryName'];
 
           return ListView(
             padding: EdgeInsets.all(16),
             children: [
-              // Image.network(imagePath),
+              // Container(
+              //   height: 50, 
+              //   width: double.infinity, 
+              //   child: Image.network(
+              //     imagePath,
+              //     fit: BoxFit.cover, 
+              //   ),
+              // ),
               SizedBox(height: 20),
               Text('Name: $name', style: TextStyle(fontSize: 18)),
               SizedBox(height: 10),
@@ -78,32 +88,50 @@ class _DetailsState extends State<Details> {
                 ),
                 onChanged: (value) {
                   setState(() {
-                    progressToAdd = int.tryParse(value) ?? 0;
+                    progressToAdd = double.tryParse(value) ?? 0.0;
                   });
                 },
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    progress += progressToAdd;
+
+                    // Update progress in Firestore
+                    FirebaseFirestore.instance
+                        .collection('Media')
+                        .where('Name', isEqualTo: widget.title)
+                        .get()
+                        .then((querySnapshot) {
+                      querySnapshot.docs.forEach((doc) {
+                        doc.reference.update({'Progress': progress});
+                      });
+                    });
+
+                    // update overallstat
+                    FirebaseFirestore.instance
+                        .collection('Category')
+                        .where('Name', isEqualTo: catName) 
+                        .get()
+                        .then((querySnapshot) {
+                      querySnapshot.docs.forEach((doc) {
+                        // Retrieve the existing overallStat and add progressToAdd to it
+                        final double existingOverallStat = doc['OverallStat'] ?? 0;
+                        final double newOverallStat = existingOverallStat + progressToAdd;
+
+                        // Update the overallStat field in Firestore
+                        doc.reference.update({'OverallStat': newOverallStat});
+                      });
+                    });
+                    _controller.clear();
+                  });
+                },
+                child: Text('Record Progress'),
               ),
             ],
           );
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            progress += progressToAdd;
-
-            // Update progress in Firestore
-            FirebaseFirestore.instance
-                .collection('Media')
-                .where('Name', isEqualTo: widget.title)
-                .get()
-                .then((querySnapshot) {
-              querySnapshot.docs.forEach((doc) {
-                doc.reference.update({'Progress': progress});
-              });
-            });
-          });
-        },
-        child: Icon(Icons.add),
       ),
     );
   }

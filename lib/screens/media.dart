@@ -15,13 +15,15 @@ class Media extends StatefulWidget {
 class MediaCard extends StatelessWidget {
   final String Mediatitle;
   final String imagePath;
+  final VoidCallback onDelete; // Callback function for delete action
 
   MediaCard({
     required this.Mediatitle,
     required this.imagePath,
+    required this.onDelete,
   });
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -30,12 +32,13 @@ class MediaCard extends StatelessWidget {
           MaterialPageRoute(
             builder: (context) => MediaList(
               title: Mediatitle,
-            )),
+            ),
+          ),
         );
       },
       //card configuration
       child: Container(
-        height: 100,  
+        height: 100,
         margin: const EdgeInsets.symmetric(vertical: 10.0),
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -48,32 +51,33 @@ class MediaCard extends StatelessWidget {
             width: 0,
           ),
         ),
-        child: Container(
-          padding: const EdgeInsets.all(12.0),
-          decoration: BoxDecoration(
-            color: Colors.black54, // Black overlay to make text more readable
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                Mediatitle,
-                style: TextStyle(
-                  fontSize: 20,
-                  // fontWeight: FontWeight.bold,
-                  color: Colors.white, 
-                ),
+        child: Stack(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12.0),
+              decoration: BoxDecoration(
+                color: Colors.black54, // Black overlay to make text more readable
+                borderRadius: BorderRadius.circular(10.0),
               ),
-              IconButton(
-                onPressed: () {
-                  // todo: add logic to delete the item
-                },
-                icon: Icon(Icons.delete),
-                color: Colors.white, // Icon color set to white
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    Mediatitle,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: onDelete, // Call onDelete function
+                    icon: Icon(Icons.delete),
+                    color: Colors.white,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -131,7 +135,8 @@ class _MediaState extends State<Media> {
         tempMediaList.add(
           MediaCard(
             Mediatitle: categoryName,
-            imagePath: "lib/assets/books.jpg",
+            imagePath: "lib/assets/books.jpg", 
+            onDelete: () {  },
           ),
         );
       });
@@ -254,8 +259,14 @@ class _MediaState extends State<Media> {
                   )
                 else
                   Column(
-                    children: mediaList,
-                  ),
+                    children: mediaList.map((media) {
+                      return MediaCard(
+                        Mediatitle: media.Mediatitle,
+                        imagePath: media.imagePath,
+                        onDelete: () => deleteMediaCategory(media.Mediatitle),
+                      );
+                    }).toList(),
+                ),
               ],
             ),
           ],
@@ -289,7 +300,7 @@ class _MediaState extends State<Media> {
   // submit button for adding a media
   Future<void> submitMedia(BuildContext context) async {
     final mediaName = addController.text;
-    int overallStat = 0;
+    double overallStat = 0;
 
     try {
       // Create a new instance of CategoryModel
@@ -307,7 +318,8 @@ class _MediaState extends State<Media> {
         mediaList.add(
           MediaCard(
             Mediatitle: mediaName,
-            imagePath: "lib/assets/books.jpg",
+            imagePath: "lib/assets/books.jpg", 
+            onDelete: () {  },
           ),
         );
       });
@@ -315,6 +327,29 @@ class _MediaState extends State<Media> {
       addController.clear();
     } catch (e) {
       print('Error adding media: $e');
+    }
+  }
+
+  Future<void> deleteMediaCategory(String categoryName) async {
+    try {
+      // Delete the category from Firestore
+      await firestore
+          .collection('Category')
+          .where('UserId', isEqualTo: userId)
+          .where('Name', isEqualTo: categoryName)
+          .get()
+          .then((querySnapshot) {
+        querySnapshot.docs.forEach((doc) {
+          doc.reference.delete();
+        });
+      });
+
+      // Remove the category from mediaList
+      setState(() {
+        mediaList.removeWhere((media) => media.Mediatitle == categoryName);
+      });
+    } catch (e) {
+      print('Error deleting media category: $e');
     }
   }
 }

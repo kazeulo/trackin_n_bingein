@@ -2,7 +2,7 @@ class CategoryModel {
   final String? id;
   final String userId;
   final String name;
-  final overallStat; 
+  final double overallStat; 
 
   const CategoryModel({
     this.id,
