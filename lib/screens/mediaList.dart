@@ -39,7 +39,7 @@ class _MediaListState extends State<MediaList> {
           Navigator.push(
             context,
             MaterialPageRoute(
-            builder: (context) => AddItem(),
+            builder: (context) => AddItem(categoryName: widget.title),
             ),
           );
           // to do: if empty or null, showToast saying to enter again
