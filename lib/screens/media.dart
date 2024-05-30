@@ -1,7 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trackin_n_bingein/screens/mediaList.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
-
 
 class Media extends StatefulWidget {
   const Media({Key? key}) : super(key: key);
@@ -12,12 +12,10 @@ class Media extends StatefulWidget {
 
 class MediaCard extends StatelessWidget {
   final String Mediatitle;
-  final String mediaType;
   final String imagePath;
 
   MediaCard({
     required this.Mediatitle,
-    required this.mediaType,
     required this.imagePath,
   });
 
@@ -28,9 +26,9 @@ class MediaCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => MediaList(
-                    title: '',
-                  )),
+            builder: (context) => MediaList(
+              title: Mediatitle,
+            )),
         );
       },
       //card configuration
@@ -81,7 +79,10 @@ class MediaCard extends StatelessWidget {
 }
 
 class _MediaState extends State<Media> {
+  List<MediaCard> mediaList = [];
   late TextEditingController addController;
+
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -157,7 +158,7 @@ class _MediaState extends State<Media> {
                         "lib/assets/banner1.png",
                         fit: BoxFit.fill,
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(top: 25, right: 25),
                         child: Text(
                           "Track what you binge",
@@ -192,16 +193,8 @@ class _MediaState extends State<Media> {
                   ],
                 ),
                 SizedBox(height: 5.0),
-                MediaCard(
-                  Mediatitle: "Books",
-                  mediaType: "Books",
-                  imagePath: "lib/assets/books.jpg",
-                ),
-                  SizedBox(height: 5.0),
-                MediaCard(
-                  Mediatitle: "Movies",
-                  mediaType: "Movies",
-                  imagePath: "lib/assets/movie.jpg",
+                Column(
+                  children: mediaList,
                 ),
               ],
             ),
@@ -211,7 +204,7 @@ class _MediaState extends State<Media> {
     );
   }
 
-  Future<String?> addMedia(BuildContext context) async {
+  Future<void> addMedia(BuildContext context) async {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -225,18 +218,38 @@ class _MediaState extends State<Media> {
           TextButton(
             child: Text('SUBMIT'),
             onPressed: () {
-              submitMedia(context); // Pass context to submit function
+              submitMedia(context); 
             },
           )
         ],
       ),
     );
-    return null;
   }
 
   // submit button for adding a media
-  void submitMedia(BuildContext context) {
-    Navigator.of(context).pop(addController.text);
-    addController.clear();
+  Future<void> submitMedia(BuildContext context) async {
+
+    final mediaName = addController.text;
+
+    try {
+      await firestore.collection('media').add({
+        'Name': mediaName,
+        //'UserId': userId, 
+      });
+
+      setState(() {
+        // Add the new media card to the list
+        mediaList.add(
+          MediaCard(
+            Mediatitle: mediaName,
+            imagePath: "lib/assets/books.jpg",
+          ),
+        );
+      });
+      Navigator.of(context).pop();
+      addController.clear();
+    } catch (e) {
+      print('Error adding media: $e');
+    }
   }
 }
