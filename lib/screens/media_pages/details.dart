@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:trackin_n_bingein/global/common/toast.dart';
 
 class Details extends StatefulWidget {
   final String title;
@@ -21,6 +22,7 @@ class _DetailsState extends State<Details> {
   void initState() {
     super.initState();
     progressToAdd = 0;
+    progress = 0;
     _fetchProgress(); // Fetch progress from Firestore
   }
 
@@ -134,6 +136,7 @@ class _DetailsState extends State<Details> {
                     }
                     
                     // Clear the text field
+                    showToast(message: 'Progress added');
                     _controller.clear();
                   });
                 },

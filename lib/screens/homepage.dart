@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:trackin_n_bingein/backend/userFetch.dart';
 import 'package:trackin_n_bingein/screens/statistics.dart'; 
 
-
 class Homepage extends StatefulWidget {
   final String email;
   const Homepage({Key? key, required this.email}) : super(key: key);
