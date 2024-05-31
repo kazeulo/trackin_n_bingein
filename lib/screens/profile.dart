@@ -131,7 +131,7 @@ class _ProfileState extends State<Profile> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => EditProfile(email: '',)),
+                              MaterialPageRoute(builder: (context) => EditProfile(email: widget.email,)),
                             );
                           },
                         ),
