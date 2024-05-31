@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart'; 
 import 'package:trackin_n_bingein/backend/userFetch.dart';
 import 'package:trackin_n_bingein/screens/statistics.dart'; 
 
-// Modify Homepage to be a StatefulWidget so it can fetch data asynchronously
+
 class Homepage extends StatefulWidget {
   final String email;
   const Homepage({Key? key, required this.email}) : super(key: key);
@@ -48,22 +47,7 @@ class _HomepageState extends State<Homepage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset('lib/assets/logofin.png', height: 50),
-                      InkWell(
-                        onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => Profile()),
-                          // );
-                        },
-                        child: ClipOval(
-                          child: Image.asset(
-                            "lib/assets/placeholder_profile.jpg",
-                            fit: BoxFit.cover,
-                            width: 40,
-                            height: 40,
-                          ),
-                        ),
-                      ),
+                      Text("Trackin' n' Bingein"),
                     ],
                   ),
                 ),
@@ -74,7 +58,7 @@ class _HomepageState extends State<Homepage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       WeeklyWrapUpSection(),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       MyListingsSection(),
                     ],
                   ),
@@ -88,10 +72,11 @@ class _HomepageState extends State<Homepage> {
   }
 }
 
+// greeting section
 class GreetingSection extends StatelessWidget {
   final String username;
 
-  const GreetingSection({Key? key, required this.username}) : super(key: key);
+  const GreetingSection({super.key, required this.username});
 
   @override
   Widget build(BuildContext context) {
@@ -99,9 +84,9 @@ class GreetingSection extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(16.0),
       height: 100,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xFFA7BCC7),
-        borderRadius: const BorderRadius.only(
+        borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(25),
           bottomRight: Radius.circular(25),
         ),
@@ -124,6 +109,7 @@ class GreetingSection extends StatelessWidget {
   }
 }
 
+// weekly wrap up section
 class WeeklyWrapUpSection extends StatelessWidget {  // not finished
   @override 
   Widget build(BuildContext context) {
@@ -158,14 +144,15 @@ class WeeklyWrapUpSection extends StatelessWidget {  // not finished
   }
 }
 
+// listings section
 class MyListingsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 16, top: 8),
+          padding: EdgeInsets.only(left: 16, top: 8),
           child: Text(
             'My Listings',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
