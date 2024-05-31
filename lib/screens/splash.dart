@@ -11,18 +11,20 @@ class Splash extends StatelessWidget {
       body: Container(
         color: BackgroundColor.bColor1,
         child: Stack(
-          fit: StackFit.expand, 
+          fit: StackFit.expand,
           children: [
+            // for splash screen sizing
             Positioned(
+              top: MediaQuery.of(context).size.height / 2 - 370,
               left: 0,
               bottom: 0,
               child: Image.asset(
                 "lib/assets/splash.png",
               ),
             ),
+            // for logo
             Positioned(
-              top: MediaQuery.of(context).size.height / 2 -
-                  270,
+              top: MediaQuery.of(context).size.height / 2 - 270,
               left: 0,
               right: 0,
               child: Center(
@@ -33,10 +35,11 @@ class Splash extends StatelessWidget {
                 ),
               ),
             ),
+            // app text
             const Align(
               alignment: Alignment.topCenter,
               child: Padding(
-                padding: EdgeInsets.only(top: 250.0),
+                padding: EdgeInsets.only(top: 180.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -61,18 +64,17 @@ class Splash extends StatelessWidget {
                 ),
               ),
             ),
+            // button placement
             Positioned(
-             bottom: MediaQuery.of(context).size.height / 2 -
-                  380,
+              bottom: MediaQuery.of(context).size.height / 2 - 300,
               left: 0,
               right: 0,
               child: Center(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Buttons.getStartedButton(
-                    context), 
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Buttons.getStartedButton(context),
+                ),
               ),
-            ),
             ),
           ],
         ),
