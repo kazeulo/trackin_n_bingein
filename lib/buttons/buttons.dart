@@ -26,28 +26,6 @@ class Buttons {
     );
   }
 
-  // Continue button
-  // static Widget continueButton(BuildContext context, List<String> selectedInterests) {
-  //   return ElevatedButton(
-  //     child: const Text('Continue'),
-  //     style: ElevatedButton.styleFrom(
-  //       foregroundColor: ButtonStyling.primaryColor,
-  //       backgroundColor: ButtonStyling.buttonTextColor,
-  //       padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-  //       textStyle: TextStyle(fontSize: 18),
-  //       elevation: 3,
-  //     ),
-  //     onPressed: () {
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => Navigation(selectedInterests: selectedInterests, username: '',),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
   //marked as finished button
   static Widget finishButton(BuildContext context) {
     return ElevatedButton(
@@ -70,7 +48,7 @@ class Buttons {
     );
   }
 
-  // cancel
+  // cancel button
   static Widget cancelButton(BuildContext context) {
     return ElevatedButton(
       child: const Text('Cancel'),
@@ -88,7 +66,7 @@ class Buttons {
     );
   }
 
-  //savebutton
+  //save button
   static Widget saveButton(BuildContext context) {
     return ElevatedButton(
       child: const Text('Save'),
@@ -104,7 +82,7 @@ class Buttons {
     );
   }
 
-  //add media
+  //add media button
     static Widget addButton(BuildContext context, VoidCallback onPressed) {
     return ElevatedButton(
       child: const Text('Add Media'),
@@ -119,5 +97,3 @@ class Buttons {
     );
   }
 }
-
-

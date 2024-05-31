@@ -9,7 +9,6 @@ import 'package:trackin_n_bingein/buttons/buttons.dart';
 import 'package:trackin_n_bingein/styling/styling.dart';
 
 class AddItem extends StatefulWidget {
-
   final String categoryName;
 
   const AddItem({super.key, required this.categoryName});
@@ -19,7 +18,6 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
-
   late String _userId;
 
   @override
@@ -29,6 +27,8 @@ class _AddItemState extends State<AddItem> {
   }
 
   // get id of current user
+  // Method to get the current user's ID
+
   void _getCurrentUserId() {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
@@ -36,12 +36,13 @@ class _AddItemState extends State<AddItem> {
     }
   }
 
+  // Controllers for text input fields
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _authorController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _maxDurationController = TextEditingController();
   File? _image;
 
+  // Method to pick an image from the gallery
   Future<void> _getImage() async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -55,7 +56,7 @@ class _AddItemState extends State<AddItem> {
     });
   }
 
-  // for description
+  // Variables for description and word count
   String description = '';
   int descriptionWordCount = 0;
   final int maxDescriptionWordCount = 500;
@@ -70,6 +71,7 @@ class _AddItemState extends State<AddItem> {
         padding: EdgeInsets.all(16.0),
         child: ListView(
           children: [
+            // Image picker section
             GestureDetector(
               onTap: _getImage,
               child: _image == null
@@ -93,28 +95,31 @@ class _AddItemState extends State<AddItem> {
               ),
             ),
             SizedBox(height: 30),
+            // Text input fields for media details
             TextFormField(
               controller: _nameController,
-              decoration: InputDecoration(labelText: 'Name',
-              prefixIcon: Icon(Icons.bookmark),
+              decoration: InputDecoration(
+                labelText: 'Name',
+                prefixIcon: Icon(Icons.bookmark),
               ),
             ),
             TextFormField(
               controller: _authorController,
-              decoration: InputDecoration(labelText: 'Author or Creator',
-              prefixIcon: Icon(Icons.person),
+              decoration: InputDecoration(
+                labelText: 'Author or Creator',
+                prefixIcon: Icon(Icons.person),
               ),
             ),
             TextFormField(
               controller: _maxDurationController,
-              decoration: InputDecoration(labelText: 'Max Duration',
-              prefixIcon: Icon(Icons.punch_clock),
+              decoration: InputDecoration(
+                labelText: 'Max Duration',
+                prefixIcon: Icon(Icons.punch_clock),
               ),
               keyboardType: TextInputType.number,
             ),
-
-            // for description
             SizedBox(height: 20),
+            // Description input field with word count
             Stack(
               children: [
                 TextFormField(
@@ -144,12 +149,10 @@ class _AddItemState extends State<AddItem> {
                     });
                   },
                 ),
-                 SizedBox(height: 20),
+                SizedBox(height: 20),
                 Positioned(
-                  bottom:
-                      5.0, 
-                  right:
-                      10.0, 
+                  bottom: 5.0,
+                  right: 10.0,
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10.0),
                     decoration: BoxDecoration(
@@ -163,15 +166,15 @@ class _AddItemState extends State<AddItem> {
                 ),
               ],
             ),
-
             SizedBox(height: 20),
+            // Buttons for cancelling and adding media
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Buttons.cancelButton(context),
                 ElevatedButton(
                   onPressed: () async {
-                    // Convert max duration to integer
+                    // Convert max duration to double
                     double maxDuration = 0;
                     String status = 'Ongoing';
                     double progress = 0;
@@ -184,18 +187,20 @@ class _AddItemState extends State<AddItem> {
                     // Create a new instance of MediaModel with user inputs
                     MediaModel newMedia = MediaModel(
                       userId: _userId,
-                      categoryName: widget.categoryName, 
+                      categoryName: widget.categoryName,
                       name: _nameController.text,
-                      progress: progress, 
-                      status: status, 
+                      progress: progress,
+                      status: status,
                       author: _authorController.text,
                       description: description,
                       maxDuration: maxDuration,
                       image: _image,
                     );
+                    
                     // Add the new media item to Firestore
                     await FirebaseFirestore.instance.collection('Media').add(newMedia.toJson());
-                    
+
+                    // Navigate back to the previous screen
                     Navigator.of(context).pop();
 
                     // Clear all input fields
