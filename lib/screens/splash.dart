@@ -15,7 +15,7 @@ class Splash extends StatelessWidget {
           children: [
             // for splash screen sizing
             Positioned(
-              top: MediaQuery.of(context).size.height / 2 - 270,
+              top: MediaQuery.of(context).size.height / 2 - 370,
               left: 0,
               bottom: 0,
               child: Image.asset(
@@ -24,7 +24,7 @@ class Splash extends StatelessWidget {
             ),
             // for logo
             Positioned(
-              top: MediaQuery.of(context).size.height / 2 - 370,
+              top: MediaQuery.of(context).size.height / 2 - 270,
               left: 0,
               right: 0,
               child: Center(
